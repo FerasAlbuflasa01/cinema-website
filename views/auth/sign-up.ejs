@@ -1,0 +1,31 @@
+<%- include("../partials/_navbar") %>
+
+<h1>Create a New Account</h1>
+
+<form action="/auth/sign-up" method="post">
+  <label for="email">email: </label>
+  <input type="text" name="email" id="email" />
+
+  <br />
+
+  <label for="firstName">First name: </label>
+  <input type="text" name="firstName" id="firstName" />
+
+  <br />
+
+  <label for="lastName">last name: </label>
+  <input type="text" name="lastName" id="lastName" />
+
+  <br />
+
+  <label for="password">Password: </label>
+  <input type="password" name="password" id="password" />
+
+  <br />
+
+  <label for="confirmPassword">Confirm Password: </label>
+  <input type="password" name="confirmPassword" id="confirmPassword" />
+
+  <br />
+  <button type="sumbit">Sing up</button>
+</form>
