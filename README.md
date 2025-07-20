@@ -38,9 +38,11 @@
 
 ### **_Project Preview_**
 
-##### All project screenshots and visual references can be viewed [here](https://drive.google.com/file/d/1jH3iORZ3LbZDXxyJwevK8hZ0L3YHkoAa/view)
+- All project screenshots and visual references can be viewed [here](https://drive.google.com/file/d/1jH3iORZ3LbZDXxyJwevK8hZ0L3YHkoAa/view)
 
-##### Trello board [here](https://trello.com/b/cEx1qjnE/cinegate)
+#### ![Logo](CINE-GATE.jpg)
+
+#### ![ERD](ERD.jpg)
 
 ---
 
