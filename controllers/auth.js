@@ -23,7 +23,8 @@ exports.auth_signup_post = async (req, res) => {
     email: req.body.email,
     password: hashedPassword,
     firstName: req.body.firstName,
-    lastName: req.body.lastName
+    lastName: req.body.lastName,
+    role: 'user'
   })
   res.send(`Thanks for signing up ${user.firstName} ${user.lastName}`)
 }
@@ -55,4 +56,31 @@ exports.auth_signin_post = async (req, res) => {
 exports.auth_signout_get = (req, res) => {
   req.session.destroy()
   res.send('sing out')
+}
+
+exports.auth_edit_get = async (req, res) => {
+  const user = await User.findById(req.session.user._id)
+  res.render('auth/edit.ejs', { user })
+}
+
+exports.auth_edit_put = async (req, res) => {
+  const user = await User.findById(req.session.user._id)
+
+  user.firstName = req.body.firstName
+  user.lastName = req.body.lastName
+  user.email = req.body.email
+
+  if (req.body.currentPassword && req.body.newPassword) {
+    // password in DB and currentPassword
+    const isMatch = bcrept.compareSync(req.body.currentPassword, user.password)
+
+    if (!isMatch) {
+      return res.send('Wrong password')
+    }
+
+    const hashedNewPassword = bcrept.hashSync(req.body.newPassword, 10)
+    user.password = hashedNewPassword
+  }
+  await user.save()
+  res.redirect('/')
 }
