@@ -1,0 +1,12 @@
+<nav>
+  <% if(user){ %>
+  <p>Welcome to the app. <%= user.firstName %></p>
+  <a href="/auth/sign-out">Sign out</a>
+
+  <% } else { %>
+  <p>Welcome to the app, guest</p>
+
+  <a href="/auth/sign-up">Sign up</a>
+  <a href="/auth/sign-in">Sign in</a>
+  <% }%>
+</nav>
