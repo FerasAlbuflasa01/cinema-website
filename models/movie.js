@@ -20,5 +20,11 @@ const movieSchema = new mongoose.Schema({
   movie_length: {
     type: Number,
     required: true
+  },
+  admin: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Admin'
   }
 })
+const Movie = mongoose.model('Movie', movieSchema)
+module.exports = Movie
