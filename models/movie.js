@@ -2,15 +2,15 @@ const mongoose = require('mongoose')
 
 const movieSchema = new mongoose.Schema({
   name: {
-    Type: String,
+    type: String,
     required: true
   },
   poster: {
-    Type: String,
-    require: true
+    type: String,
+    required: true
   },
   description: {
-    Type: String,
+    type: String,
     required: true
   },
   release_date: {

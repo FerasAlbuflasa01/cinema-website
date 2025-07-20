@@ -1,0 +1,21 @@
+<%- include("../partials/_navbarAdmin.ejs") %>
+
+<h1>Create a New admin Account</h1>
+
+<form action="/admin/auth/sign-up" method="post">
+  <label for="username">username: </label>
+  <input type="text" name="username" id="username" />
+
+  <br />
+
+  <label for="password">Password: </label>
+  <input type="password" name="password" id="password" />
+
+  <br />
+
+  <label for="confirmPassword">Confirm Password: </label>
+  <input type="password" name="confirmPassword" id="confirmPassword" />
+
+  <br />
+  <button type="sumbit">Sing up</button>
+</form>

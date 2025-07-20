@@ -1,13 +1,13 @@
-const User = require('../models/user.js')
+const User = require('../models/admin')
 const bcrept = require('bcrypt')
 
 //API's
 exports.auth_signup_get = async (req, res) => {
-  res.render('auth/sign-up.ejs')
+  res.render('authAdmin/sign-up.ejs')
 }
 
 exports.auth_signup_post = async (req, res) => {
-  const userInDatabase = await User.findOne({ email: req.body.email })
+  const userInDatabase = await User.findOne({ username: req.body.username })
   if (userInDatabase) {
     return res.send('email already taken!')
   }
@@ -20,22 +20,21 @@ exports.auth_signup_post = async (req, res) => {
   req.body.password = hashedPassword
 
   const user = await User.create({
-    email: req.body.email,
-    password: hashedPassword,
-    firstName: req.body.firstName,
-    lastName: req.body.lastName
+    username: req.body.username,
+    password: hashedPassword
   })
-  res.send(`Thanks for signing up ${user.firstName} ${user.lastName}`)
+  res.send(`Thanks for signing up ${user.username}`)
 }
 
 exports.auth_signin_get = async (req, res) => {
-  res.render('auth/sign-in.ejs')
+  res.render('authAdmin/sign-in.ejs')
 }
 
 exports.auth_signin_post = async (req, res) => {
-  const userInDatadase = await User.findOne({ email: req.body.email })
+  const userInDatadase = await User.findOne({ username: req.body.username })
+
   if (!userInDatadase) {
-    return res.send('Login failed. Please try again.')
+    return res.send('Login failed. Please try again. here')
   }
   const validPassword = bcrept.compareSync(
     req.body.password,
@@ -46,11 +45,11 @@ exports.auth_signin_post = async (req, res) => {
   }
 
   req.session.user = {
-    email: userInDatadase.email,
+    username: userInDatadase.username,
     _id: userInDatadase._id,
     role: userInDatadase.role
   }
-  res.redirect('/')
+  res.redirect('/movies')
 }
 
 exports.auth_signout_get = (req, res) => {

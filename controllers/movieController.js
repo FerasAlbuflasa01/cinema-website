@@ -17,3 +17,6 @@ exports.movie_create_post = async (req, res) => {
     res.send("you don't have permission")
   }
 }
+exports.movie_index_get = async (req, res) => {
+  res.render('movies/index', {})
+}

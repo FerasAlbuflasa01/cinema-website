@@ -15,9 +15,19 @@
   "description": "---",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FerasAlbuflasa01/cinema-website.git"
+  },
+  "bugs": {
+    "url": "https://github.com/FerasAlbuflasa01/cinema-website/issues"
+  },
+  "homepage": "https://github.com/FerasAlbuflasa01/cinema-website#readme"
 }

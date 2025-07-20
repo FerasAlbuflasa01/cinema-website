@@ -41,9 +41,13 @@ app.get('/', async (req, res) => {
 
 // Require Routes
 const authRouter = require('./routes/auth')
+const authAdminRouter = require('./routes/authAdmin')
+const movieRouter = require('./routes/moiveRoute')
 
 //Use Routes
 app.use('/auth', authRouter)
+app.use('/admin/auth', authAdminRouter)
+app.use('/movies', movieRouter)
 
 app.listen(port, () => {
   console.log(`The app is ready on port ${port}`)
