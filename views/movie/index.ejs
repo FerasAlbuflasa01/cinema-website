@@ -10,9 +10,14 @@
     <%- include("../partials/_navbarAdmin") %>
     <% movies.forEach((movie,index) => { %>
       <ul>
-     <li><div id='movie<%= index+1 %>'>
-        <img src="<%= movie.poster %>" alt="">
-        <%= movie.name %>
+     <li> <ul>
+      <div id='movie<%= index+1 %>'>
+      <li><img src="<%= movie.poster %>" alt=""></li>  
+      <li> <%= movie.name %></li>  
+       <li> <a href="/movies/details/<%= movie._id %>">details</a></li>  
+        <li><a href="/movies/:<%= bookings[index]._id %>">Book now</a></li>  
+    </ul>
+      
      </div></li>
      </ul>
     <% }) %>
