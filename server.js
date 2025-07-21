@@ -14,8 +14,11 @@ const port = process.env.POTR ? process.env.POTR : '3000'
 const methodOverride = require('method-override')
 const morgan = require('morgan')
 const passUserTOView = require('./middleware/pass-user-to-view')
+const firstAdmin = require('./config/firstAdmin')
 const isSignedIn = require('./middleware/is-signed-in')
 const isAdmin = require('./middleware/isAdmin')
+
+app.use(firstAdmin)
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
