@@ -32,7 +32,7 @@ const storage = multer.diskStorage({
 })
 const upload = multer({ storage })
 
-// Use Middleware
+// Use Middlewares
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
