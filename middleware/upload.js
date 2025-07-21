@@ -4,7 +4,7 @@ const fs = require('fs')
 
 const uploadDir = path.join(__dirname, '..', 'public', 'uploads')
 
-// إنشاء المجلد إذا لم يكن موجود
+//add file if not define.
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true })
 }
