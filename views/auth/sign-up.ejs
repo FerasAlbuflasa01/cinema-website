@@ -2,14 +2,14 @@
 
 <h1>Create a New Account</h1>
 
-<form action="/auth/sign-up" method="post">
-  <label for="email">email: </label>
-  <input type="text" name="email" id="email" />
+<form action="/auth/sign-up" method="POST" enctype="multipart/form-data">
+  <label for="username">username: </label>
+  <input type="text" name="username" id="username" />
 
   <br />
 
-  <label for="username">username: </label>
-  <input type="text" name="username" id="username" />
+  <label for="email">email: </label>
+  <input type="text" name="email" id="email" />
 
   <br />
 
@@ -21,6 +21,10 @@
   <label for="confirmPassword">Confirm Password: </label>
   <input type="password" name="confirmPassword" id="confirmPassword" />
 
+  <label for="image">Upload image: </label>
+  <input type="file" name="image" id="image" />
   <br />
-  <button type="sumbit">Sing up</button>
+
+  <br />
+  <button type="submit">Sing up</button>
 </form>
