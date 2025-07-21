@@ -26,3 +26,13 @@ exports.movie_index_get = async (req, res) => {
   const listOfMovies = await Movie.find()
   res.render('movie/index.ejs', { movies: listOfMovies })
 }
+
+
+exports.movie_delete_delete = async (req, res) => {
+  const currentMovie = await Movie.findById(req.params.movieId);
+  if(currentMovie.admin.equals(req.session.user_id)){
+    //need to change the following  ''await currentListing.updateOne(req.body);''
+  }else{
+    //res.send("");
+  }
+}
