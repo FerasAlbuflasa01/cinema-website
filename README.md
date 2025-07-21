@@ -27,7 +27,7 @@ The platform enables users to explore currently showing movies, check screening 
 - Express
 - MongoDB
 - Mongoose
-- Multer ( for image upload )
+- Multer (for image upload)
 
 ---
 
