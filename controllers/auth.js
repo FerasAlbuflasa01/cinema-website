@@ -74,5 +74,5 @@ exports.auth_signin_post = async (req, res) => {
 }
 exports.auth_signout_get = (req, res) => {
   req.session.destroy()
-  res.send('sing out')
+  res.redirect('/movies')
 }
