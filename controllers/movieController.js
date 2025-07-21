@@ -1,4 +1,6 @@
 const Movie = require('../models/movie')
+const Booking = require('../models/booking')
+
 
 exports.movie_create_get = async (req, res) => {
   if (req.session.user.role === 'user') {
@@ -14,6 +16,13 @@ exports.movie_create_post = async (req, res) => {
     // Check if the movie already exists
     if (!(await Movie.findOne({ name: req.body.name }))) {
       await Movie.create(req.body)
+      const movieId = Movie.findOne({name:req.body.name})
+      await Booking.create({
+        theater: req.body.theater,
+        time: req.body.time,
+        date: req.body.date,
+        movie: movieId._id
+      })
       res.redirect('/movies')
     } else {
       res.send('already exists!!!')
