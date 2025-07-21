@@ -1,7 +1,7 @@
 const express = require('express')
 require('dotenv').config()
 const session = require('express-session')
-
+const bcrypt = require('bcrypt')
 const app = express()
 
 // Database Configuration
@@ -14,11 +14,27 @@ const port = process.env.POTR ? process.env.POTR : '3000'
 const methodOverride = require('method-override')
 const morgan = require('morgan')
 const passUserTOView = require('./middleware/pass-user-to-view')
-const firstAdmin = require('./config/firstAdmin')
+
 const isSignedIn = require('./middleware/is-signed-in')
 const isAdmin = require('./middleware/isAdmin')
+const Admin = require('./models/admin')
+const firstAdmin = async () => {
+  const listOfAdmin = await Admin.findOne({ username: 'admin' })
+  if (!listOfAdmin) {
+    const password = 'admin123'
+    const hashedPassword = await bcrypt.hash(password, 10)
+    await Admin.create({
+      username: 'admin',
+      password: hashedPassword,
+      role: 'admin'
+    })
+    console.log('First admin account created successfully!')
+  } else {
+    console.log('Admin account already exists.')
+  }
+}
 
-app.use(firstAdmin)
+firstAdmin()
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
@@ -52,6 +68,7 @@ app.get('/', async (req, res) => {
 // Require Routes
 const authRouter = require('./routes/auth')
 const movieRouter = require('./routes/moiveRoute')
+const { default: mongoose } = require('mongoose')
 
 //Use Routes
 app.use('/auth', authRouter)
