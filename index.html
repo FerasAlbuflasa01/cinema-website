@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      #seats {
+        display: flex;
+        flex-direction: column; /* Ensure rows stack vertically */
+      }
+      .rows {
+        background-color: blue;
+        display: flex; /* Ensure seats are in a row */
+      }
+      .seat-row {
+        width: 30px; /* Adjust seat width */
+        height: 30px; /* Adjust seat height */
+        margin: 5px; /* Space between seats */
+        background-color: white; /* Default seat color */
+        border: 1px solid black; /* Seat border */
+        cursor: pointer; /* Change cursor to pointer */
+      }
+      .selected {
+        background-color: green; /* Color for selected seats */
+      }
+    </style>
+  </head>
+  <body>
+    <div id="messame">
+      <h2>Choose your seat</h2>
+      <h2>Movie Name</h2>
+      <h2>Date and Time | Hall</h2>
+    </div>
+    <div id="seats"></div>
+    <script>
+      const seatsHtml = document.querySelector('#seats')
+      for (let index = 0; index < 6; index++) {
+        let rowElement = document.createElement('div')
+        rowElement.setAttribute('id', `row-${index + 1}`)
+        rowElement.setAttribute('class', 'rows')
+        for (let j = 0; j < 6; j++) {
+          let seatElement = document.createElement('div')
+          seatElement.setAttribute('id', `seat-${index + 1}-${j + 1}`)
+          seatElement.setAttribute('class', 'seat-row')
+
+          // Add event listener for seat selection
+          seatElement.addEventListener('click', function () {
+            seatElement.classList.toggle('selected') // Toggle 'selected' class
+            console.log(seatElement.id)
+          })
+
+          rowElement.appendChild(seatElement)
+        }
+        seatsHtml.appendChild(rowElement)
+      }
+    </script>
+  </body>
+</html>
