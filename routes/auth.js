@@ -11,4 +11,7 @@ router.post('/sign-in', authCtrl.auth_signin_post)
 
 router.get('/sign-out', authCtrl.auth_signout_get)
 
+router.get('/edit', authCtrl.auth_edit_get)
+router.put('/edit', authCtrl.auth_edit_put)
+
 module.exports = router
