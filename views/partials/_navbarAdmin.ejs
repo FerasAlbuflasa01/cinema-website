@@ -1,0 +1,14 @@
+<nav>
+  <% if (user) { %> <% if (user.role==="admin") { %>
+  <a href="/movies/new">add a movie</a>
+  <a href="/movies">View all movies</a>
+  <a href="/auth/sign-out">Sign Out</a>
+  <% } else{%>
+  <a href="/movies">View all movies</a>
+  <a href="/auth/sign-out">Sign Out</a>
+  <% }} else{%>
+  <a href="/movies">View all movies</a>
+  <a href="/auth/sign-up">Sign up</a>
+  <a href="/auth/sign-in">Sign in</a>
+  <% } %>
+</nav>

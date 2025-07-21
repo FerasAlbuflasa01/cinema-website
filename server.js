@@ -13,15 +13,9 @@ const port = process.env.POTR ? process.env.POTR : '3000'
 // Require Middleware
 const methodOverride = require('method-override')
 const morgan = require('morgan')
-
-// Use Middleware
-app.use(express.urlencoded({ extended: true }))
-app.use(express.json())
-
-app.use(methodOverride('_method'))
-app.use(morgan('dev'))
-
-// Sesstion Configurations
+const passUserTOView = require('./middleware/pass-user-to-view')
+const isSignedIn = require('./middleware/is-signed-in')
+const isAdmin = require('./middleware/isAdmin')
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
@@ -30,20 +24,37 @@ app.use(
   })
 )
 
-app.use((req, res, next) => {
-  res.locals.user = req.session.user || null
-  next()
-})
+// Use Middleware
+app.use(express.urlencoded({ extended: true }))
+app.use(express.json())
+app.use(passUserTOView)
+app.use(methodOverride('_method'))
+app.use(morgan('dev'))
+
+// Sesstion Configurations
+
+// app.use((req, res, next) => {
+//   res.locals.user = req.session.user || null
+//   next()
+// })
 
 app.get('/', async (req, res) => {
   res.render('index.ejs')
 })
 
+// app.get('/admin', async (req, res) => {
+//   res.render('index.ejs')
+// })
+
 // Require Routes
 const authRouter = require('./routes/auth')
+const movieRouter = require('./routes/moiveRoute')
 
 //Use Routes
 app.use('/auth', authRouter)
+// app.use('/admin/auth', authAdminRouter)
+// app.use('/admin/movies', isAdmin, movieRouter)
+app.use('/movies', movieRouter)
 
 app.listen(port, () => {
   console.log(`The app is ready on port ${port}`)

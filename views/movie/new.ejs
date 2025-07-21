@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>new movie</title>
+  </head>
+  <body>
+    <%- include("../partials/_navbarAdmin") %>
+    <h1>add a movie</h1>
+    <form action="/movies/new" method="POST">
+      <label for="name">movie name:</label>
+      <input type="text" name="name" id="name" />
+      <br />
+      <label for="poster">poster:</label>
+      <input type="text" name="poster" id="poster" />
+      <br />
+      <label for="description">description:</label>
+      <input type="text" name="description" id="price" min="0" />
+      <br />
+      <label for="release_date">release date:</label>
+      <input type="date" name="release_date" id="release_date" />
+      <br />
+      <label for="movie_length">movie length:</label>
+      <input type="number" name="movie_length" id="movie_length" />
+      <br />
+      <button type="submit">Add movie</button>
+    </form>
+  </body>
+</html>

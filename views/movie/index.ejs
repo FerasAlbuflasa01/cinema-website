@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Listings</title>
+  </head>
+  <body>
+    <%- include("../partials/_navbarAdmin") %>
+    <% movies.forEach((movie,index) => { %>
+      <ul>
+     <li><div id='movie<%= index+1 %>'>
+        <img src="<%= movie.poster %>" alt="">
+        <%= movie.name %>
+     </div></li>
+     </ul>
+    <% }) %>
+    </ul>
+  </body>
+</html>
