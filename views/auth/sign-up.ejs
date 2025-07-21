@@ -2,30 +2,36 @@
 
 <h1>Create a New Account</h1>
 
-<form action="/auth/sign-up" method="post">
-  <label for="email">email: </label>
-  <input type="text" name="email" id="email" />
+<form action="/auth/sign-up" method="post" enctype="multipart/form-data">
+  <label for="email">Email: </label>
+  <input type="text" name="email" id="email" required />
 
   <br />
 
-  <label for="firstName">First name: </label>
-  <input type="text" name="firstName" id="firstName" />
+  <label for="firstName">First Name: </label>
+  <input type="text" name="firstName" id="firstName" required />
 
   <br />
 
-  <label for="lastName">last name: </label>
-  <input type="text" name="lastName" id="lastName" />
+  <label for="lastName">Last Name: </label>
+  <input type="text" name="lastName" id="lastName" required />
 
   <br />
 
   <label for="password">Password: </label>
-  <input type="password" name="password" id="password" />
+  <input type="password" name="password" id="password" required />
 
   <br />
 
   <label for="confirmPassword">Confirm Password: </label>
-  <input type="password" name="confirmPassword" id="confirmPassword" />
+  <input type="password" name="confirmPassword" id="confirmPassword" required />
 
   <br />
-  <button type="sumbit">Sing up</button>
+
+  <label for="profilePic">Profile Picture: </label>
+  <input type="file" name="profilePic" id="profilePic" accept="image/*" />
+
+  <br />
+
+  <button type="submit">Sign up</button>
 </form>
