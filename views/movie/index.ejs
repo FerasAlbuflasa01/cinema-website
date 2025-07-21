@@ -8,15 +8,14 @@
   </head>
   <body>
     <%- include("../partials/_navbarAdmin.ejs") %>
-    <h1>here all your listings</h1>
-    <ul>
-      <% listings.forEach(listing => { %>
-      <li>
-        A listing in <%= listing.streetAddress %> <%= listing.city %> owned by
-        <%= listing.owner.username %>
-        <a href="listings/<%= listing.id %>"> view for more details</a>
-      </li>
-      <% }) %>
+    <% movies.forEach((movie,index) => { %>
+      <ul>
+     <li><div id='movie<%= index+1 %>'>
+        <img src="<%= movie.poster %>" alt="">
+        <%= movie.name %>
+     </div></li>
+     </ul>
+    <% }) %>
     </ul>
   </body>
 </html>
