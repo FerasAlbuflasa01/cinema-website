@@ -8,7 +8,7 @@ exports.auth_signup_get = async (req, res) => {
 }
 
 exports.auth_signup_post = async (req, res) => {
-  const userInDatabase = await User.findOne({ email: req.body.email })
+  const userInDatabase = await User.findOne({ username: req.body.username })
   if (userInDatabase) {
     return res.send('email already taken!')
   }
@@ -21,10 +21,9 @@ exports.auth_signup_post = async (req, res) => {
   req.body.password = hashedPassword
 
   const user = await User.create({
+    username: req.body.username,
     email: req.body.email,
     password: hashedPassword,
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
     role: 'user'
   })
   res.send(`Thanks for signing up ${user.firstName} ${user.lastName}`)
@@ -36,16 +35,14 @@ exports.auth_signin_get = async (req, res) => {
 
 exports.auth_signin_post = async (req, res) => {
   // Check for user by email
-  const userInDatabase = await User.findOne({ email: req.body.email })
-  const adminInDatabase = await Admin.findOne({ username: req.body.email }) // Assuming admin uses email as username
+  const userInDatabase = await User.findOne({ username: req.body.username })
+  //const adminInDatabase = await Admin.findOne({ username: req.body.email }) // Assuming admin uses email as username
 
   let user
 
   // Determine if the user is an admin or a regular user
   if (userInDatabase) {
     user = userInDatabase // Regular user found
-  } else if (adminInDatabase) {
-    user = adminInDatabase // Admin found
   } else {
     return res.send('Login failed. Please try again.')
   }
@@ -60,7 +57,7 @@ exports.auth_signin_post = async (req, res) => {
   req.session.user = {
     email: user.email || user.username, // Use email for regular users and username for admins
     _id: user._id,
-    role: user.role || 'admin' // Default to 'admin' if it's an admin
+    role: userInDatabase.role // Default to 'admin' if it's an admin
   }
 
   // Redirect based on role

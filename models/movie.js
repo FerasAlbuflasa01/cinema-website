@@ -23,7 +23,7 @@ const movieSchema = new mongoose.Schema({
   },
   admin: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Admin'
+    ref: 'User'
   }
 })
 const Movie = mongoose.model('Movie', movieSchema)

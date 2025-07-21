@@ -16,14 +16,15 @@ const morgan = require('morgan')
 const passUserTOView = require('./middleware/pass-user-to-view')
 const isSignedIn = require('./middleware/is-signed-in')
 const isAdmin = require('./middleware/isAdmin')
-const Admin = require('./models/admin')
+const User = require('./models/user')
 const firstAdmin = async () => {
-  const listOfAdmin = await Admin.findOne({ username: 'admin' })
+  const listOfAdmin = await User.findOne({ username: 'admin' })
   if (!listOfAdmin) {
     const password = 'admin123'
     const hashedPassword = await bcrypt.hash(password, 10)
-    await Admin.create({
+    await User.create({
       username: 'admin',
+      email: 'test@gmail.com',
       password: hashedPassword,
       role: 'admin'
     })
