@@ -38,7 +38,7 @@ exports.movie_index_get = async (req, res) => {
 }
 
 exports.movie_delete_delete = async (req, res) => {
-<<<<<<< HEAD
+
   const currentMovie = await Movie.findById(req.params.movieId)
   if (currentMovie.admin.equals(req.session.user_id)) {
     //need to change the following  ''await currentListing.updateOne(req.body);''
@@ -69,7 +69,7 @@ exports.movie_booking_post = async (req, res) => {
 
   res.redirect('/movies')
 }
-=======
+
   const currentMovie = await Movie.findById(req.params.movieId);
   if(currentMovie.user.equals(req.session.user_id)){
     await currentListing.updateOne(req.body);
@@ -87,4 +87,4 @@ exports.movie_booking_post = async (req, res) => {
       res.send("You don't have permission to do that.");
    }
  };
->>>>>>> main
+
