@@ -1,5 +1,6 @@
 const Movie = require('../models/movie')
 const Booking = require('../models/booking')
+const User = require('../models/user')
 
 exports.movie_create_get = async (req, res) => {
   if (req.session.user.role === 'user') {
@@ -45,7 +46,21 @@ exports.movie_delete_delete = async (req, res) => {
   }
 }
 exports.movie_booking_get = async (req, res) => {
-  const booking = await Booking.find(req.params.booingId)
-  const movie = await Booking.find(req.params.booingId).populate('movie')
+  const booking = await Booking.findById(req.params.bookingId)
+  const movie = await Booking.findById(req.params.bookingId).populate('movie')
   res.render('movie/booking.ejs', { booking, movie })
+}
+exports.movie_booking_post = async (req, res) => {
+  console.log(req.body.selectedSeats)
+  const user = await User.findById(req.session.user._id)
+  const booking = await Booking.findById(req.params.bookingId)
+  const movie = await Booking.findById(req.params.bookingId).populate('movie')
+  user.tickets.push({
+    movie: movie.name,
+    seats: req.body.selectedSeats,
+    date: booking.date,
+    time: booking.time
+  })
+  user.save()
+  res.redirect('/movies')
 }

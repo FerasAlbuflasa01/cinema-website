@@ -22,7 +22,23 @@ const userSchema = new mongoose.Schema(
       type: String,
       enum: ['user', 'admin'],
       default: 'user'
-    }
+    },
+    ticketHistory: [
+      {
+        movie: {
+          type: String,
+          required: true
+        },
+        date: {
+          type: Date,
+          required: true
+        },
+        seats: {
+          type: [String], // Array of strings for seat identifiers
+          required: true
+        }
+      }
+    ]
   },
   {
     timestamps: true

@@ -33,60 +33,72 @@
   <body>
     <div id="messame">
       <h2>Choose your seat</h2>
-      <h2><%= movie.name %></h2>
+      <h2><%= movie.movie.name %></h2>
       <h2>
         <%= booking.date %> and <%= booking.time %> | <%= booking.theater %>
       </h2>
     </div>
-    <div id="seats"></div>
-    <button id="submit">Submit Selection</button>
+    <form id="seatForm" action="/movies/<%= booking._id %>" method="post">
+      <div id="seats"></div>
+      <button type="button" id="submitButton">Submit Selection</button>
+      <input type="hidden" id="selectedSeats" name="selectedSeats" />
+    </form>
     <script>
-      const seatsHtml = document.querySelector('#seats')
-      const selectedSeats = [] // Store selected seats
+      document.addEventListener('DOMContentLoaded', () => {
+        const seatsHtml = document.querySelector('#seats')
+        const selectedSeats = new Set() // Use Set for unique seat IDs
 
-      for (let index = 0; index < 6; index++) {
-        let rowElement = document.createElement('div')
-        rowElement.setAttribute('id', `row-${index + 1}`)
-        rowElement.setAttribute('class', 'rows')
-        for (let j = 0; j < 6; j++) {
-          let seatElement = document.createElement('div')
-          seatElement.setAttribute('id', `seat-${index + 1}-${j + 1}`)
-          seatElement.setAttribute('class', 'seat-row')
+        // Create seat layout
+        for (let index = 0; index < 6; index++) {
+          let rowElement = document.createElement('div')
+          rowElement.setAttribute('id', `row-${index + 1}`)
+          rowElement.setAttribute('class', 'rows')
+          for (let j = 0; j < 6; j++) {
+            let seatElement = document.createElement('div')
+            seatElement.setAttribute('id', `seat-${index + 1}-${j + 1}`)
+            seatElement.setAttribute('class', 'seat-row')
 
-          // Optionally mark some seats as unavailable
-          if (Math.random() < 0.3) {
-            // Randomly mark 30% as unavailable
-            seatElement.classList.add('unavailable')
-            seatElement.style.cursor = 'not-allowed' // Change cursor
-          } else {
-            // Add event listener for seat selection
-            seatElement.addEventListener('click', function () {
-              if (!seatElement.classList.contains('unavailable')) {
-                seatElement.classList.toggle('selected') // Toggle 'selected' class
-                const seatId = seatElement.id
-                if (selectedSeats.has(seatId)) {
-                  selectedSeats.delete(seatId) // Remove from selection
-                } else {
-                  selectedSeats.add(seatId) // Add to selection
+            // Optionally mark some seats as unavailable
+            if (Math.random() < 0.3) {
+              seatElement.classList.add('unavailable')
+              seatElement.style.cursor = 'not-allowed' // Change cursor
+            } else {
+              // Add event listener for seat selection
+              seatElement.addEventListener('click', function () {
+                if (!seatElement.classList.contains('unavailable')) {
+                  seatElement.classList.toggle('selected') // Toggle 'selected' class
+                  const seatId = seatElement.id
+                  if (selectedSeats.has(seatId)) {
+                    selectedSeats.delete(seatId) // Remove from selection
+                  } else {
+                    selectedSeats.add(seatId) // Add to selection
+                  }
+                  console.log('Selected Seats:', Array.from(selectedSeats))
                 }
-                console.log('Selected Seats:', Array.from(selectedSeats))
-              }
-            })
+              })
+            }
+
+            rowElement.appendChild(seatElement)
           }
-
-          rowElement.appendChild(seatElement)
+          seatsHtml.appendChild(rowElement)
         }
-        seatsHtml.appendChild(rowElement)
-      }
 
-      // Submit button event
-      document.getElementById('submit').addEventListener('click', function () {
-        if (selectedSeats.size > 0) {
-          alert(`You have selected: ${Array.from(selectedSeats).join(', ')}`)
-          // Here you can handle the submission logic
-        } else {
-          alert('Please select at least one seat.')
-        }
+        // Submit button event
+        document
+          .getElementById('submitButton')
+          .addEventListener('click', function () {
+            if (selectedSeats.size > 0) {
+              // Convert Set to Array and join into a string
+              const selectedSeatsArray = Array.from(selectedSeats).join(',')
+              // Set the value of the hidden input
+              document.getElementById('selectedSeats').value =
+                selectedSeatsArray
+              // Submit the form
+              document.getElementById('seatForm').submit() // Ensure this targets the form
+            } else {
+              alert('Please select at least one seat.')
+            }
+          })
       })
     </script>
   </body>
