@@ -2,13 +2,13 @@
 
 <h1>Edit Your Profile</h1>
 
-<form action="/auth/edit?_method=PUT" method="POST">
-  <label>First Name:</label>
-  <input type="text" name="firstName" value="<%= user.firstName %>" />
-  <br />
-
-  <label>Last Name:</label>
-  <input type="text" name="lastName" value="<%= user.lastName %>" />
+<form
+  action="/auth/edit?_method=PUT"
+  method="POST"
+  enctype="multipart/form-data"
+>
+  <label>Username:</label>
+  <input type="text" name="username" value="<%= user.username %>" />
   <br />
 
   <label>Email:</label>
@@ -22,6 +22,11 @@
 
   <label>New Password:</label>
   <input type="password" name="newPassword" />
+  <br />
+
+  <label>Update Profile Picture:</label>
+  <input type="file" name="image" />
+
   <br />
 
   <button type="submit">Update Profile</button>

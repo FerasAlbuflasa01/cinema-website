@@ -5,10 +5,10 @@ const bcrypt = require('bcrypt')
 const app = express()
 
 // Database Configuration
-const mangoose = require('./config/db')
+const mongoose = require('./config/db')
 
 // Set the Port Configuration
-const port = process.env.POTR ? process.env.POTR : '3000'
+const port = process.env.PORT ? process.env.PORT : '3000'
 
 // Require Middleware
 const methodOverride = require('method-override')
@@ -43,6 +43,8 @@ app.use(
     saveUninitialized: true
   })
 )
+
+app.use('/uploads', express.static('public/uploads'))
 
 // Use Middleware
 app.use(express.urlencoded({ extended: true }))
