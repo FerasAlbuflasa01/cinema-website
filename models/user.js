@@ -29,12 +29,16 @@ const userSchema = new mongoose.Schema(
           type: String,
           required: true
         },
+        time: {
+          type: String,
+          required: true
+        },
         date: {
-          type: Date,
+          type: String,
           required: true
         },
         seats: {
-          type: [String], // Array of strings for seat identifiers
+          type: [String],
           required: true
         }
       }

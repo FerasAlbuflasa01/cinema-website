@@ -52,15 +52,19 @@ exports.movie_booking_get = async (req, res) => {
 }
 exports.movie_booking_post = async (req, res) => {
   console.log(req.body.selectedSeats)
-  const user = await User.findById(req.session.user._id)
-  const booking = await Booking.findById(req.params.bookingId)
   const movie = await Booking.findById(req.params.bookingId).populate('movie')
-  user.tickets.push({
-    movie: movie.name,
-    seats: req.body.selectedSeats,
-    date: booking.date,
-    time: booking.time
+  const booking = await Booking.findById(req.params.bookingId)
+
+  const user = await User.findByIdAndUpdate(req.session.user._id, {
+    $push: {
+      ticketHistory: {
+        movie: movie.movie.name,
+        date: booking.date,
+        time: booking.time,
+        seats: req.body.selectedSeats
+      }
+    }
   })
-  user.save()
+
   res.redirect('/movies')
 }
