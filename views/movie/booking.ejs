@@ -48,7 +48,7 @@
     <script>
       document.addEventListener('DOMContentLoaded', () => {
         const seatsHtml = document.querySelector('#seats')
-        const selectedSeats = []
+        const selectedSeats = new Set()
 
         for (let index = 0; index < 6; index++) {
           let rowElement = document.createElement('div')
@@ -59,18 +59,20 @@
             seatElement.setAttribute('id', `seat-${index + 1}-${j + 1}`)
             seatElement.setAttribute('class', 'seat-row')
 
+            // Optionally mark some seats as unavailable
             if (Math.random() < 0.3) {
               seatElement.classList.add('unavailable')
-              seatElement.style.cursor = 'not-allowed'
+              seatElement.style.cursor = 'not-allowed' // Change cursor
             } else {
+              // Add event listener for seat selection
               seatElement.addEventListener('click', function () {
                 if (!seatElement.classList.contains('unavailable')) {
-                  seatElement.classList.toggle('selected')
+                  seatElement.classList.toggle('selected') // Toggle 'selected' class
                   const seatId = seatElement.id
                   if (selectedSeats.has(seatId)) {
-                    selectedSeats.delete(seatId)
+                    selectedSeats.delete(seatId) // Remove from selection
                   } else {
-                    selectedSeats.add(seatId)
+                    selectedSeats.add(seatId) // Add to selection
                   }
                   console.log('Selected Seats:', Array.from(selectedSeats))
                 }
@@ -82,15 +84,18 @@
           seatsHtml.appendChild(rowElement)
         }
 
+        // Submit button event
         document
           .getElementById('submitButton')
           .addEventListener('click', function () {
             if (selectedSeats.size > 0) {
+              // Convert Set to Array and join into a string
               const selectedSeatsArray = Array.from(selectedSeats).join(',')
+              // Set the value of the hidden input
               document.getElementById('selectedSeats').value =
                 selectedSeatsArray
-
-              document.getElementById('seatForm').submit()
+              // Submit the form
+              document.getElementById('seatForm').submit() // Ensure this targets the form
             } else {
               alert('Please select at least one seat.')
             }
