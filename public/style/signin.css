@@ -1,0 +1,42 @@
+body{
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #e0e5ec;
+    font-family: Arial, Helvetica, sans-serif;
+
+}
+.neumorphic {
+  background: #e0e5ec;
+  border-radius: 20px;
+  box-shadow: 10px 10px 20px #a3b1c6, -10px -10px 20px #ffffff;
+}
+
+.neumorphic-input {
+  background: #e0e5ec;
+  border-radius: 20px;
+  box-shadow: inset 10px 10px 20px #a3b1c6, inset -10px -10px 20px #ffffff;
+}
+
+.neumorphic-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+  width: 300px;
+  text-align: center;
+}
+
+.neumorphic-button {
+    padding: 15px 30px;
+    font-size: 16;
+  flex: column;
+   color: #6d7582;
+  border: none;
+  cursor: pointer;
+    transition: all 0.3s ease;
+}
+
