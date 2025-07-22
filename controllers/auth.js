@@ -111,3 +111,8 @@ exports.auth_edit_put = async (req, res) => {
   await user.save()
   res.redirect('/')
 }
+
+exports.auth_showTickets_get = async (req, res) => {
+  const user = await User.findById(req.session.user._id)
+  res.render('auth/index.ejs', { user })
+}

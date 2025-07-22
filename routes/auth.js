@@ -15,4 +15,5 @@ router.get('/sign-out', authCtrl.auth_signout_get)
 router.get('/edit', authCtrl.auth_edit_get)
 router.put('/edit', upload.single('image'), authCtrl.auth_edit_put)
 
+router.get('/view', authCtrl.auth_showTickets_get)
 module.exports = router
