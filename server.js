@@ -77,7 +77,14 @@ app.use('/auth', authRouter)
 // app.use('/admin/auth', authAdminRouter)
 // app.use('/admin/movies', isAdmin, movieRouter)
 app.use('/movies', movieRouter)
-
+app.get('/api/users', async (req, res) => {
+  try {
+    const users = 10 // Adjust query as needed
+    res.json(users)
+  } catch (error) {
+    res.status(500).json({ message: 'Error retrieving data' })
+  }
+})
 app.listen(port, () => {
   console.log(`The app is ready on port ${port}`)
 })

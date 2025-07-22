@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <title>Document</title>
     <style>
       #seats {
@@ -46,6 +47,23 @@
       <input type="hidden" id="selectedSeats" name="selectedSeats" />
     </form>
     <script>
+      let bookedSeats
+
+      const fetchBookedSeats = async () => {
+        try {
+          const response = await axios.get('/movies/:bookingId/api')
+          bookedSeats = response.data // Set the data
+          console.log('Fetched booked seats:', bookedSeats) // Log data here to verify
+        } catch (error) {
+          console.error('Error fetching booked seats:', error)
+        }
+      }
+
+      // Call the fetch function
+      fetchBookedSeats().then(() => {
+        console.log('After fetch, bookedSeats:', bookedSeats) // Access variable after fetch completes
+      })
+
       document.addEventListener('DOMContentLoaded', () => {
         const seatsHtml = document.querySelector('#seats')
         const selectedSeats = new Set()
@@ -72,6 +90,7 @@
                   if (selectedSeats.has(seatId)) {
                     selectedSeats.delete(seatId) // Remove from selection
                   } else {
+                    console.log(bookedSeats)
                     selectedSeats.add(seatId) // Add to selection
                   }
                   console.log('Selected Seats:', Array.from(selectedSeats))

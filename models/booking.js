@@ -14,14 +14,14 @@ const bookingSchema = new mongoose.Schema(
       type: String,
       required: true
     },
-    
-    movie: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Movie'
-      },
 
-    seat: {
-        location: []
+    movie: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Movie'
+    },
+
+    bookedSeats: {
+      type: [String]
     }
   },
 

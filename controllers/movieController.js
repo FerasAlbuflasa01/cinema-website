@@ -78,3 +78,8 @@ exports.movie_booking_post = async (req, res) => {
 
   res.redirect('/movies')
 }
+exports.booking_api_get = async (req, res) => {
+  //const bookedSeats = await Booking.find()
+  const bookedSeats = 10
+  res.json(bookedSeats)
+}

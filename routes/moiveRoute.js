@@ -12,4 +12,5 @@ router.post('/:bookingId', movieCtrl.movie_booking_post)
 router.put('/:movieId', movieCtrl.movie_update_put)
 router.delete('/:movieId', movieCtrl.movie_delete_delete)
 
+router.get('/:bookingId/api', movieCtrl.booking_api_get)
 module.exports = router
