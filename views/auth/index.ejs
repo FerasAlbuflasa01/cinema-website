@@ -1,0 +1,9 @@
+<%- include("../partials/_navbarAdmin") %> <%
+user.ticketHistory.forEach((ticket) => { %>
+<ul>
+  <li>Movie: <%= ticket.movie %></li>
+  <li>Date: <%= ticket.date %></li>
+  <li>Time: <%= ticket.time %></li>
+  <li>Seats: <%= ticket.seats.join(', ') %></li>
+</ul>
+<% }) %>

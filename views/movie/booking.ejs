@@ -7,30 +7,32 @@
     <style>
       #seats {
         display: flex;
-        flex-direction: column; /* Ensure rows stack vertically */
+        flex-direction: column;
       }
       .rows {
         background-color: blue;
-        display: flex; /* Ensure seats are in a row */
+        display: flex;
       }
       .seat-row {
-        width: 30px; /* Adjust seat width */
-        height: 30px; /* Adjust seat height */
-        margin: 5px; /* Space between seats */
-        background-color: white; /* Default seat color */
-        border: 1px solid black; /* Seat border */
-        cursor: pointer; /* Change cursor to pointer */
+        width: 30px;
+        height: 30px;
+        margin: 5px;
+        background-color: white;
+        border: 1px solid black;
+        cursor: pointer;
       }
       .selected {
-        background-color: green; /* Color for selected seats */
+        background-color: green;
       }
       .unavailable {
-        background-color: red; /* Color for unavailable seats */
-        cursor: not-allowed; /* Change cursor for unavailable seats */
+        background-color: red;
+        cursor: not-allowed;
       }
     </style>
   </head>
   <body>
+    <%- include("../partials/_navbarAdmin") %>
+
     <div id="messame">
       <h2>Choose your seat</h2>
       <h2><%= movie.movie.name %></h2>
@@ -46,9 +48,8 @@
     <script>
       document.addEventListener('DOMContentLoaded', () => {
         const seatsHtml = document.querySelector('#seats')
-        const selectedSeats = new Set() // Use Set for unique seat IDs
+        const selectedSeats = []
 
-        // Create seat layout
         for (let index = 0; index < 6; index++) {
           let rowElement = document.createElement('div')
           rowElement.setAttribute('id', `row-${index + 1}`)
@@ -58,20 +59,18 @@
             seatElement.setAttribute('id', `seat-${index + 1}-${j + 1}`)
             seatElement.setAttribute('class', 'seat-row')
 
-            // Optionally mark some seats as unavailable
             if (Math.random() < 0.3) {
               seatElement.classList.add('unavailable')
-              seatElement.style.cursor = 'not-allowed' // Change cursor
+              seatElement.style.cursor = 'not-allowed'
             } else {
-              // Add event listener for seat selection
               seatElement.addEventListener('click', function () {
                 if (!seatElement.classList.contains('unavailable')) {
-                  seatElement.classList.toggle('selected') // Toggle 'selected' class
+                  seatElement.classList.toggle('selected')
                   const seatId = seatElement.id
                   if (selectedSeats.has(seatId)) {
-                    selectedSeats.delete(seatId) // Remove from selection
+                    selectedSeats.delete(seatId)
                   } else {
-                    selectedSeats.add(seatId) // Add to selection
+                    selectedSeats.add(seatId)
                   }
                   console.log('Selected Seats:', Array.from(selectedSeats))
                 }
@@ -83,18 +82,15 @@
           seatsHtml.appendChild(rowElement)
         }
 
-        // Submit button event
         document
           .getElementById('submitButton')
           .addEventListener('click', function () {
             if (selectedSeats.size > 0) {
-              // Convert Set to Array and join into a string
               const selectedSeatsArray = Array.from(selectedSeats).join(',')
-              // Set the value of the hidden input
               document.getElementById('selectedSeats').value =
                 selectedSeatsArray
-              // Submit the form
-              document.getElementById('seatForm').submit() // Ensure this targets the form
+
+              document.getElementById('seatForm').submit()
             } else {
               alert('Please select at least one seat.')
             }
