@@ -76,10 +76,20 @@ exports.movie_booking_post = async (req, res) => {
     }
   })
 
+  const result = await Booking.findByIdAndUpdate(req.params.bookingId, {
+    $addToSet: {
+      bookedSeats: {
+        $each: Array.isArray(req.body.unavailableSeats)
+          ? req.body.unavailableSeats
+          : req.body.unavailableSeats.split(',')
+      }
+    }
+  })
+
   res.redirect('/movies')
 }
 exports.booking_api_get = async (req, res) => {
-  //const bookedSeats = await Booking.find()
-  const bookedSeats = 10
-  res.json(bookedSeats)
+  const bookedSeats = await Booking.findById(req.params.bookingId)
+
+  res.json(bookedSeats.bookedSeats)
 }
