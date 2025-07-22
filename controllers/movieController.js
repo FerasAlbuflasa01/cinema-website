@@ -38,12 +38,21 @@ exports.movie_index_get = async (req, res) => {
 }
 
 exports.movie_delete_delete = async (req, res) => {
-
   const currentMovie = await Movie.findById(req.params.movieId)
-  if (currentMovie.admin.equals(req.session.user_id)) {
-    //need to change the following  ''await currentListing.updateOne(req.body);''
+  if (currentMovie.user.equals(req.session.user_id)) {
+    await currentListing.updateOne(req.body)
   } else {
-    //res.send("");
+    res.send("You don't have the permission to do that")
+  }
+}
+
+exports.movie_update_put = async (req, res) => {
+  const currentMovie = await Movie.findById(req.params.movieId)
+  if (currentMovie.user.equals(req.session.user._id)) {
+    await currentMovie.updateOne(req.body)
+    res.redirect('/movies')
+  } else {
+    res.send("You don't have permission to do that.")
   }
 }
 exports.movie_booking_get = async (req, res) => {
@@ -69,22 +78,3 @@ exports.movie_booking_post = async (req, res) => {
 
   res.redirect('/movies')
 }
-
-  const currentMovie = await Movie.findById(req.params.movieId);
-  if(currentMovie.user.equals(req.session.user_id)){
-    await currentListing.updateOne(req.body);
-  }else{
-    res.send("You don't have the permission to do that");
-  }
-}
-
- exports.movie_update_put = async (req, res) => {
-    const currentMovie = await Movie.findById(req.params.movieId);
-    if (currentMovie.user.equals(req.session.user._id)) {
-      await currentMovie.updateOne(req.body);
-       res.redirect('/movie');
-    } else {
-      res.send("You don't have permission to do that.");
-   }
- };
-
