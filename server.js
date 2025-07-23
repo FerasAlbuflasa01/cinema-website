@@ -14,17 +14,15 @@ const port = process.env.PORT ? process.env.PORT : '3000'
 const methodOverride = require('method-override')
 const morgan = require('morgan')
 const passUserTOView = require('./middleware/pass-user-to-view')
-const isSignedIn = require('./middleware/is-signed-in')
-const isAdmin = require('./middleware/isAdmin')
 const User = require('./models/user')
 const firstAdmin = async () => {
-  const listOfAdmin = await User.findOne({ username: 'admin' })
+  const listOfAdmin = await User.findOne({ username: 'admin2' })
   if (!listOfAdmin) {
     const password = 'admin123'
     const hashedPassword = await bcrypt.hash(password, 10)
     await User.create({
-      username: 'admin',
-      email: 'test@gmail.com',
+      username: 'admin2',
+      email: 'test2@gmail.com',
       password: hashedPassword,
       role: 'admin'
     })

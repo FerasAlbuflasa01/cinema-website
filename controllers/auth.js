@@ -11,7 +11,6 @@ exports.auth_signup_get = async (req, res) => {
 exports.auth_signup_post = async (req, res) => {
   const userInDatabase = await User.findOne({ username: req.body.username })
 
-  //user in DB
   if (userInDatabase) {
     return res.send('Username already taken!')
   }
@@ -40,40 +39,34 @@ exports.auth_signin_get = async (req, res) => {
 }
 
 exports.auth_signin_post = async (req, res) => {
-  // Check for user by username
   const userInDatabase = await User.findOne({ username: req.body.username })
-  //const adminInDatabase = await Admin.findOne({ username: req.body.email }) // Assuming admin uses email as username
 
   let user
 
-  // Determine if the user is an admin or a regular user
   if (userInDatabase) {
     user = userInDatabase
   } else {
     return res.send('Login failed. Please try again.')
   }
 
-  // Check password validity
   const validPassword = bcrypt.compareSync(req.body.password, user.password)
   if (!validPassword) {
     return res.send('Login failed. Please try again.')
   }
 
-  // Set session based on user role
   req.session.user = {
     username: user.username,
     _id: user._id,
     role: userInDatabase.role
   }
 
-  // Redirect based on role
   if (user.role === 'admin') {
     console.log(req.session.user)
-    // Redirect admin to admin dashboard
+
     res.redirect('/')
   } else {
     console.log(req.session.user)
-    // Redirect regular user to home
+
     res.redirect('/')
   }
 }
@@ -98,7 +91,6 @@ exports.auth_edit_put = async (req, res) => {
   }
 
   if (req.body.currentPassword && req.body.newPassword) {
-    // password in DB and currentPassword
     const isMatch = bcrypt.compareSync(req.body.currentPassword, user.password)
 
     if (!isMatch) {

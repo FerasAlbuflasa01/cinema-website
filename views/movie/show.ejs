@@ -6,6 +6,7 @@
     <title>Document</title>
   </head>
   <body>
+    <%- include("../partials/_navbarAdmin") %>
     <ul>
       <li><%= movie.name %></li>
       <li>
@@ -15,8 +16,13 @@
       <li><a href="/movies/bookings/<%= booking._id %>">book now</a></li>
       <% if (user.role==="admin") { %>
       <li><a href="/movies/<%= movie._id %>/edit">edit</a></li>
+
+      <li>
+        <form action="/movies/<%= movie._id %>?_method=DELETE" method="POST">
+          <button type="submit">Delete <%= movie.name %></button>
+        </form>
+      </li>
       <% } %>
     </ul>
-    <ul></ul>
   </body>
 </html>
