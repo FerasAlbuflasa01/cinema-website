@@ -33,9 +33,11 @@ The platform enables users to explore currently showing movies, check screening 
 
 ### **_Getting Started_**
 
-Sign up and sign in as a new user and then begin viewing the different sections of the website.
+If you're a regular user, create an account or sign in to begin exploring the site. And if you're an admin, sign in using your admin email and password to access the management dashboard.
 
-Once signed in, users can browse available movies, check showtimes, and reserve tickets.
+once signed in as an admin, you'll be redirected to the admin dashboard where you can add, update, or remove movies and manage screening times; moreover, you can edit theater details, and in addition to that, view and control user bookings to ensure the platform runs smoothly.
+
+once signed in, you’ll be able to browse currently showing movies, check screening times, and reserve or book tickets seamlessly; moreover, you have the option to upload a profile photo, update your personal information, and reset your password if you ever forget it.
 
 The project is currently under development and will be deployed soon.
 
@@ -49,7 +51,7 @@ You can track the development progress through the GitHub repository [here](http
 
 - To tarck our project at trello [here](https://trello.com/b/cEx1qjnE/cinegate)
 
-- ERD ![ERD](image/erd.jpeg)
+- ERD ![ERD](https://i.imgur.com/58hoEYr.jpeg)
 
 ---
 
@@ -68,5 +70,14 @@ You can track the development progress through the GitHub repository [here](http
 #### Markdown Cheatsheet: [GitHub](https://github.com/FerasAlbuflasa01/cinema-website)
 
 #### Using Multer: [YouTube](https://www.youtube.com/watch?v=wIOpe8S2Mk8)
+
+#### w3[Schools](https://www.w3schools.com/)
+
+#### [GoogleFonts](https://fonts.google.com/)
+
+####  [GoogleFontsIcon](https://fonts.google.com/icons)
+
+
+
 
 ---
