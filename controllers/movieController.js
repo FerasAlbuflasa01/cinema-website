@@ -60,10 +60,11 @@ exports.movie_delete_delete = async (req, res) => {
 exports.movie_update_get = async (req, res) => {
   if (req.session.user.role === 'user') {
     res.send('Error page not found!!!')
-  }
-  const currentMovie = await Movie.findById(req.params.movieId)
+  } else {
+    const currentMovie = await Movie.findById(req.params.movieId)
 
-  res.render('movie/edit.ejs', { movie: currentMovie })
+    res.render('movie/edit.ejs', { movie: currentMovie })
+  }
 }
 exports.movie_update_put = async (req, res) => {
   const currentMovie = await Movie.findById(req.params.movieId)
@@ -85,7 +86,6 @@ exports.movie_booking_get = async (req, res) => {
   res.render('movie/booking.ejs', { booking, movie })
 }
 exports.movie_booking_post = async (req, res) => {
-  console.log(req.body.selectedSeats)
   const movie = await Booking.findById(req.params.bookingId).populate('movie')
   const booking = await Booking.findById(req.params.bookingId)
 

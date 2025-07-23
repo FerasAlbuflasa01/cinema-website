@@ -3,79 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/style/bookingStyle.css" />
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <title>Seat Selection</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        background-color: #f4f4f4;
-        margin: 0;
-        padding: 20px;
-      }
-      #messame {
-        text-align: center;
-        margin-bottom: 20px;
-      }
-      h2 {
-        margin: 10px 0;
-        color: #333;
-      }
-      #seats {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-      }
-      .screen {
-        width: 100%;
-        height: 50px;
-        background-color: #333;
-        color: white;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 20px;
-        font-weight: bold;
-      }
-      .rows {
-        display: flex;
-        justify-content: center;
-        margin-bottom: 10px;
-      }
-      .seat-row {
-        width: 30px;
-        height: 30px;
-        margin: 2px;
-        background-color: #fff;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        cursor: pointer;
-        transition: background-color 0.3s, transform 0.2s;
-      }
-      .seat-row:hover {
-        background-color: #e0e0e0;
-        transform: scale(1.05);
-      }
-      .selected {
-        background-color: #4caf50;
-      }
-      .unavailable {
-        background-color: #f44336;
-        cursor: not-allowed;
-      }
-      #submitButton {
-        padding: 10px 15px;
-        background-color: #007bff;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.3s;
-        font-size: 16px;
-      }
-      #submitButton:hover {
-        background-color: #0056b3;
-      }
-    </style>
   </head>
   <body>
     <div id="messame">
@@ -94,83 +24,6 @@
       <input type="hidden" id="selectedSeats" name="selectedSeats" />
       <input type="hidden" id="unavailableSeats" name="unavailableSeats" />
     </form>
-    <script>
-      const bookedSeats = new Set()
-
-      const fetchBookedSeats = async () => {
-        try {
-          const fulUrl = window.location.href
-          const response = await axios.get(fulUrl + '/api')
-          response.data.forEach((seat) => bookedSeats.add(seat))
-          console.log('Fetched booked seats:', Array.from(bookedSeats))
-          attachEvent()
-        } catch (error) {
-          console.error('Error fetching booked seats:', error)
-        }
-      }
-
-      const attachEvent = () => {
-        const seatsHtml = document.querySelector('#seats')
-        const selectedSeats = new Set()
-        const unavailableSeats = new Set()
-
-        for (let index = 0; index < 6; index++) {
-          let rowElement = document.createElement('div')
-          rowElement.setAttribute('id', `row-${index + 1}`)
-          rowElement.setAttribute('class', 'rows')
-
-          for (let j = 0; j < 6; j++) {
-            let seatElement = document.createElement('div')
-            seatElement.setAttribute('id', `seat-${index + 1}-${j + 1}`)
-            seatElement.setAttribute('class', 'seat-row')
-
-            if (bookedSeats.has(seatElement.id)) {
-              seatElement.classList.add('unavailable')
-              seatElement.style.cursor = 'not-allowed'
-              unavailableSeats.add(seatElement.id)
-            }
-
-            seatElement.addEventListener('click', function () {
-              if (!seatElement.classList.contains('unavailable')) {
-                seatElement.classList.toggle('selected')
-
-                const seatId = seatElement.id
-                if (selectedSeats.has(seatId)) {
-                  selectedSeats.delete(seatId)
-                  unavailableSeats.delete(seatId)
-                } else {
-                  selectedSeats.add(seatId)
-                  unavailableSeats.add(seatId)
-                }
-                console.log('Selected Seats:', Array.from(selectedSeats))
-              }
-            })
-
-            rowElement.appendChild(seatElement)
-          }
-          seatsHtml.appendChild(rowElement)
-        }
-
-        document
-          .getElementById('submitButton')
-          .addEventListener('click', function () {
-            if (selectedSeats.size > 0) {
-              const selectedSeatsArray = Array.from(selectedSeats).join(',')
-              const unavailableSeatsArray =
-                Array.from(unavailableSeats).join(',')
-
-              document.getElementById('selectedSeats').value =
-                selectedSeatsArray
-              document.getElementById('unavailableSeats').value =
-                unavailableSeatsArray
-
-              document.getElementById('seatForm').submit()
-            } else {
-              alert('Please select at least one seat.')
-            }
-          })
-      }
-      fetchBookedSeats()
-    </script>
+    <script src="/scripts/bookingScript.js"></script>
   </body>
 </html>

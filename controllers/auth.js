@@ -1,5 +1,4 @@
 const User = require('../models/user.js')
-const Admin = require('../models/admin')
 const bcrypt = require('bcrypt')
 
 //API's

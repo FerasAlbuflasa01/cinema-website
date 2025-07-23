@@ -16,7 +16,7 @@ const morgan = require('morgan')
 const passUserTOView = require('./middleware/pass-user-to-view')
 const User = require('./models/user')
 const firstAdmin = async () => {
-  const listOfAdmin = await User.findOne({ username: 'admin2' })
+  const listOfAdmin = await User.findOne({ username: 'admin' })
   if (!listOfAdmin) {
     const password = 'admin123'
     const hashedPassword = await bcrypt.hash(password, 10)
@@ -50,22 +50,12 @@ app.use(express.json())
 app.use(passUserTOView)
 app.use(methodOverride('_method'))
 app.use(morgan('dev'))
-app.use(express.static(path.join(__dirname,'public')))
+app.use(express.static(path.join(__dirname, 'public')))
 
 // Sesstion Configurations
-
-// app.use((req, res, next) => {
-//   res.locals.user = req.session.user || null
-//   next()
-// })
-
 app.get('/', async (req, res) => {
   res.render('index.ejs')
 })
-
-// app.get('/admin', async (req, res) => {
-//   res.render('index.ejs')
-// })
 
 // Require Routes
 const authRouter = require('./routes/auth')
@@ -73,17 +63,9 @@ const movieRouter = require('./routes/moiveRoute')
 
 //Use Routes
 app.use('/auth', authRouter)
-// app.use('/admin/auth', authAdminRouter)
-// app.use('/admin/movies', isAdmin, movieRouter)
+
 app.use('/movies', movieRouter)
-app.get('/api/users', async (req, res) => {
-  try {
-    const users = 10 // Adjust query as needed
-    res.json(users)
-  } catch (error) {
-    res.status(500).json({ message: 'Error retrieving data' })
-  }
-})
+
 app.listen(port, () => {
   console.log(`The app is ready on port ${port}`)
 })
