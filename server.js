@@ -26,9 +26,6 @@ const firstAdmin = async () => {
       password: hashedPassword,
       role: 'admin'
     })
-    console.log('First admin account created successfully!')
-  } else {
-    console.log('Admin account already exists.')
   }
 }
 
@@ -66,6 +63,4 @@ app.use('/auth', authRouter)
 
 app.use('/movies', movieRouter)
 
-app.listen(port, () => {
-  console.log(`The app is ready on port ${port}`)
-})
+app.listen(port)

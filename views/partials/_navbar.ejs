@@ -38,12 +38,11 @@
 
     <h2>User Profile</h2>
     <p><%= user ? user.username : 'Guest' %></p>
+
     <% if (user) { %>
     <div class="sidebar-links">
       <a href="/auth/index">My Tickets</a>
       <a href="/auth/edit">Edit Profile</a>
-
-      <!-- <a href="/wallet">💳 My Wallet</a> -->
     </div>
     <div class="signoutLink">
       <a href="/auth/sign-out"> Sign Out</a>

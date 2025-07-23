@@ -4,43 +4,125 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/style/style.css" />
+    <link rel="stylesheet" href="/style/update.css" />
 
     <title>new movie</title>
   </head>
   <body>
     <%- include("../partials/_navbar") %>
-    <h1>add a movie</h1>
-    <form action="/movies/new" method="POST">
-      <label for="name">movie name:</label>
-      <input type="text" name="name" id="name" />
-      <br />
-      <label for="poster">poster:</label>
-      <input type="text" name="poster" id="poster" />
-      <br />
-      <label for="description">description:</label>
-      <input type="text" name="description" id="price" min="0" />
-      <br />
-      <label for="release_date">release date:</label>
-      <input type="date" name="release_date" id="release_date" />
-      <br />
-      <label for="movie_length">movie length:</label>
-      <input type="number" name="movie_length" id="movie_length" />
-      <br />
+    <h1 class="newAccount">Add a Movie</h1>
 
-      <label for="theater">theater:</label>
-      <input type="number" name="theater" id="theater" />
-      <br />
+    <div class="form">
+      <div class="container">
+        <form action="/movies/new" method="POST" enctype="multipart/form-data">
+          <label for="name">Movie Name:</label>
+          <input type="text" name="name" id="name" class="field" />
+          <br />
+          <label for="poster">Poster:</label>
+          <div class="image">
+            <div class="upload-text">Click to upload movie poster</div>
 
-      <label for="time">time:</label>
-      <input type="number" name="time" id="time" />
-      <br />
+            <div
+              class="upload-area"
+              onclick="document.getElementById('poster').click()"
+            >
+              <img
+                id="posterPreview"
+                src=""
+                alt="Preview"
+                class="preview-img"
+                style="display: none"
+              />
+              <div class="upload-icon">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="40px"
+                  viewBox="0 -960 960 960"
+                  width="40px"
+                  fill="#1f1f1f"
+                >
+                  <path
+                    d="M446.67-315.33v-356L332-556.67l-47.33-48L480-800l195.33 195.33-47.33 48-114.67-114.66v356h-66.66ZM226.67-160q-27 0-46.84-19.83Q160-199.67 160-226.67V-362h66.67v135.33h506.66V-362H800v135.33q0 27-19.83 46.84Q760.33-160 733.33-160H226.67Z"
+                  />
+                </svg>
+              </div>
 
-      <label for="date">date:</label>
-      <input type="date" name="date" id="date" />
+              <input
+                type="file"
+                id="poster"
+                name="poster"
+                accept="image/*"
+                class="file-input"
+              />
+            </div>
+          </div>
+          <br />
+          <br />
 
-      <br />
+          <label for="Description">description:</label>
+          <input
+            type="text"
+            name="description"
+            id="price"
+            min="0"
+            class="field"
+          />
+          <br />
+          <label for="release_date">Release Date:</label>
+          <input
+            type="date"
+            name="release_date"
+            id="release_date"
+            class="field"
+          />
+          <br />
+          <label for="movie_length">Movie Length (minutes):</label>
+          <input
+            type="number"
+            name="movie_length"
+            id="movie_length"
+            class="field"
+          />
+          <br />
 
-      <button type="submit">Add movie</button>
-    </form>
+          <label for="theater">Theater:</label>
+          <input type="number" name="theater" id="theater" class="field" />
+          <br />
+
+          <label for="time">Time:</label>
+          <input type="text" name="time" id="time" class="field" />
+          <br />
+
+          <label for="date">Date:</label>
+          <input type="date" name="date" id="date" class="field" />
+
+          <br />
+
+          <button type="submit" class="sign">Add movie</button>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      document
+        .getElementById('poster')
+        .addEventListener('change', function (event) {
+          const input = event.target
+          const preview = document.getElementById('posterPreview')
+          const uploadIcon = document.querySelector('.upload-icon')
+          const uploadText = document.querySelector('.upload-text')
+
+          if (input.files && input.files[0]) {
+            const reader = new FileReader()
+            reader.onload = function (e) {
+              preview.src = e.target.result
+              preview.style.display = 'block'
+              if (uploadIcon) uploadIcon.style.display = 'none'
+              if (uploadText) uploadText.style.display = 'none'
+            }
+            reader.readAsDataURL(input.files[0])
+          }
+        })
+    </script>
   </body>
 </html>

@@ -5,7 +5,6 @@ const fetchBookedSeats = async () => {
     const fulUrl = window.location.href
     const response = await axios.get(fulUrl + '/api')
     response.data.forEach((seat) => bookedSeats.add(seat))
-    console.log('Fetched booked seats:', Array.from(bookedSeats))
     attachEvent()
   } catch (error) {
     console.error('Error fetching booked seats:', error)
@@ -45,7 +44,6 @@ const attachEvent = () => {
             selectedSeats.add(seatId)
             unavailableSeats.add(seatId)
           }
-          console.log('Selected Seats:', Array.from(selectedSeats))
         }
       })
 
@@ -71,4 +69,5 @@ const attachEvent = () => {
       }
     })
 }
+
 fetchBookedSeats()

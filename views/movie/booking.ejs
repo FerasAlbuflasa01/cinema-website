@@ -3,27 +3,35 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <link rel="stylesheet" href="/style/bookingStyle.css" />
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
     <title>Seat Selection</title>
   </head>
   <body>
+    <%- include("../partials/_navbar") %>
+
     <div id="messame">
       <h2>Choose Your Seat</h2>
-      <h2><%= movie.movie.name %></h2>
+      <h2 class="movieName"><%= movie.movie.name %></h2>
       <h2><%= booking.date %> and <%= booking.time %></h2>
     </div>
-    <form
-      id="seatForm"
-      action="/movies/bookings/<%= booking._id %>"
-      method="post"
-    >
-      <div class="screen">SCREEN</div>
-      <div id="seats"></div>
-      <button type="button" id="submitButton">Submit Selection</button>
-      <input type="hidden" id="selectedSeats" name="selectedSeats" />
-      <input type="hidden" id="unavailableSeats" name="unavailableSeats" />
-    </form>
+    <div class="cinemaAll">
+      <div class="cinema">
+        <form
+          id="seatForm"
+          action="/movies/bookings/<%= booking._id %>"
+          method="post"
+        >
+          <div class="screen">SCREEN</div>
+          <div id="seats"></div>
+          <button type="button" id="submitButton">Submit Selection</button>
+          <input type="hidden" id="selectedSeats" name="selectedSeats" />
+          <input type="hidden" id="unavailableSeats" name="unavailableSeats" />
+        </form>
+      </div>
+    </div>
     <script src="/scripts/bookingScript.js"></script>
   </body>
 </html>

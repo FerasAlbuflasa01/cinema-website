@@ -3,25 +3,38 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link rel="stylesheet" href="/style/style.css" />
+    <link rel="stylesheet" href="/style/style.css" />
+    <link rel="stylesheet" href="/style/admin.css" />
+    <link rel="stylesheet" href="/style/movie.css" />
     <title>Listings</title>
   </head>
   <body>
     <%- include("../partials/_navbar") %>
-    <% movies.forEach((movie,index) => { %>
-      <ul>
-     <li> <ul>
-      <div id='movie<%= index+1 %>'>
-      <li><img src="<%= movie.poster %>" alt=""></li>  
-      <li> <%= movie.name %></li>  
-       <li> <a href="/movies/<%= movie._id %>">details</a></li>  
-        <li><a href="/movies/bookings/<%= bookings[index]._id %>">Book now</a></li>
-        
-    </ul>
-      
-     </div></li>
-     </ul>
-    <% }) %>
-    </ul>
+
+    <div class="adminLinks">
+      <% if (user && user.role === 'admin') { %>
+      <a href="/movies/new">Add a New Movie</a>
+      <% } %>
+    </div>
+    <div class="movies-container">
+      <% movies.forEach((movie, index) => { %>
+      <div class="movie-card">
+        <img
+          src="/uploads/<%= movie.poster %>"
+          alt="movie poster"
+          class="posterImg"
+        />
+
+        <div class="overlay">
+          <a href="/movies/<%= movie._id %>" class="details-btn">Details</a>
+          <a
+            href="/movies/bookings/<%= bookings[index]._id %>"
+            class="booking-btn"
+            >Book Now</a
+          >
+        </div>
+      </div>
+      <% }) %>
+    </div>
   </body>
 </html>

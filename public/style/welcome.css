@@ -1,0 +1,18 @@
+.welcome {
+  background-color: #4b72a8dd;
+  padding: 60px 40px;
+  border-radius: 20px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+
+  height: auto;
+  width: 500px;
+
+  margin: 50px 350px;
+}
+
+.welcomeHeader {
+  font-size: 2.5rem;
+  margin-bottom: 30px;
+  color: #fff;
+  text-align: center;
+}

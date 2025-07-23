@@ -16,7 +16,11 @@ exports.movie_create_post = async (req, res) => {
 
     // Check if the movie already exists
     if (!(await Movie.findOne({ name: req.body.name }))) {
+      const poster = req.file ? req.file.filename : null
+      req.body.poster = poster
+
       await Movie.create(req.body)
+
       const movieId = await Movie.findOne({ name: req.body.name })
       await Booking.create({
         theater: req.body.theater,
@@ -52,34 +56,54 @@ exports.movie_delete_delete = async (req, res) => {
   ) {
     await currentMovie.deleteOne()
     await currentBooking.deleteOne()
-    res.direct('/movies')
+    res.redirect('/movies')
   } else {
     res.send("You don't have the permission to do that")
   }
 }
 exports.movie_update_get = async (req, res) => {
   if (req.session.user.role === 'user') {
-    res.send('Error page not found!!!')
-  } else {
-    const currentMovie = await Movie.findById(req.params.movieId)
-
-    res.render('movie/edit.ejs', { movie: currentMovie })
+    return res.send('Error page not found!!!')
   }
+  const currentMovie = await Movie.findById(req.params.movieId)
+  const currentBooking = await Booking.findOne({ movie: req.params.movieId })
+
+  res.render('movie/edit.ejs', { movie: currentMovie, booking: currentBooking })
 }
+
 exports.movie_update_put = async (req, res) => {
   const currentMovie = await Movie.findById(req.params.movieId)
   const currentBooking = await Booking.findOne({ movie: req.params.movieId })
+
   if (
+    currentMovie &&
     currentMovie.admin.equals(req.session.user._id) &&
     req.session.user.role === 'admin'
   ) {
-    await currentMovie.updateOne(req.body)
-    await currentBooking.updateOne(req.body)
+    currentMovie.name = req.body.name
+    currentMovie.description = req.body.description
+    currentMovie.release_date = req.body.release_date
+    currentMovie.movie_length = req.body.movie_length
+
+    if (req.file) {
+      currentMovie.poster = req.file.filename
+    }
+
+    await currentMovie.save()
+
+    if (currentBooking) {
+      currentBooking.theater = req.body.theater
+      currentBooking.time = req.body.time
+      currentBooking.date = req.body.date
+      await currentBooking.save()
+    }
+
     res.redirect(`/movies/${req.params.movieId}`)
   } else {
-    res.send("You don't have permission to do that.")
+    res.send("You don't have permission to update this movie.")
   }
 }
+
 exports.movie_booking_get = async (req, res) => {
   const booking = await Booking.findById(req.params.bookingId)
   const movie = await Booking.findById(req.params.bookingId).populate('movie')

@@ -3,64 +3,166 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <title>update movie</title>
+    <link rel="stylesheet" href="/style/update.css" />
+    <title>Update Movie</title>
   </head>
   <body>
-    <%- include("../partials/_navbarAdmin") %>
-    <h1>update a movie</h1>
-    <form action="/movies/<%= movie._id %>?_method=PUT" method="POST">
-      <label for="name">movie name:</label>
-      <input type="text" name="name" id="name" value="<%= movie.name %>" />
-      <br />
-      <label for="poster">poster:</label>
-      <input
-        type="text"
-        name="poster"
-        id="poster"
-        value="<%= movie.poster %>"
-      />
-      <br />
-      <label for="description">description:</label>
-      <input
-        type="text"
-        name="description"
-        id="price"
-        min="0"
-        value="<%= movie.description %>"
-      />
-      <br />
-      <label for="release_date">release date:</label>
-      <input
-        type="date"
-        name="release_date"
-        id="release_date"
-        value="<%= movie.release_date %>"
-      />
-      <br />
-      <label for="movie_length">movie length:</label>
-      <input
-        type="number"
-        name="movie_length"
-        id="movie_length"
-        value="<%= movie.movie_length %>"
-      />
-      <br />
+    <%- include("../partials/_navbar") %>
 
-      <label for="theater">theater:</label>
-      <input type="number" name="theater" id="theater" />
-      <br />
+    <h1 class="newAccount">Update a Movie</h1>
 
-      <label for="time">time:</label>
-      <input type="number" name="time" id="time" />
-      <br />
+    <div class="form">
+      <div class="container">
+        <form
+          action="/movies/<%= movie._id %>?_method=PUT"
+          method="POST"
+          enctype="multipart/form-data"
+        >
+          <label>Movie Name:</label>
+          <input
+            type="text"
+            name="name"
+            value="<%= movie.name %>"
+            class="field"
+            required
+          />
+          <br />
 
-      <label for="date">date:</label>
-      <input type="date" name="date" id="date" />
+          <label>Poster:</label>
+          <div class="image">
+            <div class="upload-text">Click to upload movie poster</div>
 
-      <br />
+            <div
+              class="upload-area"
+              onclick="document.getElementById('imageInput').click()"
+            >
+              <% if (movie.poster) { %>
+              <img
+                id="posterPreview"
+                src="/uploads/<%= movie.poster %>"
+                alt="Current Poster"
+                class="preview-img"
+                style="display: block"
+              />
+              <% } else { %>
+              <img
+                id="posterPreview"
+                src=""
+                alt="Preview"
+                class="preview-img"
+                style="display: none"
+              />
+              <div class="upload-icon">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="40px"
+                  viewBox="0 -960 960 960"
+                  width="40px"
+                  fill="#1f1f1f"
+                >
+                  <path
+                    d="M446.67-315.33v-356L332-556.67l-47.33-48L480-800l195.33 195.33-47.33 48-114.67-114.66v356h-66.66ZM226.67-160q-27 0-46.84-19.83Q160-199.67 160-226.67V-362h66.67v135.33h506.66V-362H800v135.33q0 27-19.83 46.84Q760.33-160 733.33-160H226.67Z"
+                  />
+                </svg>
+              </div>
+              <% } %>
 
-      <button type="submit">update movie</button>
-    </form>
+              <input
+                type="file"
+                id="imageInput"
+                name="image"
+                accept="image/*"
+                class="file-input"
+              />
+            </div>
+          </div>
+          <br />
+
+          <label>Description:</label>
+          <input
+            type="text"
+            name="description"
+            value="<%= movie.description %>"
+            class="field"
+            required
+          />
+          <br />
+
+          <label>Release Date:</label>
+          <input
+            type="date"
+            name="release_date"
+            value="<%= movie.release_date %>"
+            class="field"
+            required
+          />
+          <br />
+
+          <label>Movie Length (minutes):</label>
+          <input
+            type="number"
+            name="movie_length"
+            value="<%= movie.movie_length %>"
+            class="field"
+            required
+          />
+          <br />
+
+          <label>Theater:</label>
+          <input
+            type="number"
+            name="theater"
+            value="<%= booking ? booking.theater : '' %>"
+            class="field"
+            required
+          />
+          <br />
+
+          <label>Time:</label>
+          <input
+            type="text"
+            name="time"
+            value="<%= booking ? booking.time : '' %>"
+            class="field"
+            required
+          />
+          <br />
+
+          <label>Date:</label>
+          <input
+            type="date"
+            name="date"
+            value="<%=  booking.date %>"
+            class="field"
+            required
+          />
+          <br />
+
+          <button type="submit" class="sign">Update Movie</button>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      document
+        .getElementById('imageInput')
+        .addEventListener('change', function (event) {
+          const input = event.target
+          const preview = document.getElementById('posterPreview')
+          const uploadIcon = document.querySelector('.upload-icon')
+          const uploadText = document.querySelector('.upload-text')
+
+          if (input.files && input.files[0]) {
+            const reader = new FileReader()
+            reader.onload = function (e) {
+              preview.src = e.target.result
+              preview.style.display = 'block'
+              if (uploadIcon) uploadIcon.style.display = 'none'
+              if (uploadText) uploadText.style.display = 'none'
+            }
+            reader.readAsDataURL(input.files[0])
+          }
+        })
+    </script>
   </body>
 </html>
