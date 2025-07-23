@@ -1,5 +1,6 @@
-<%- include("../partials/_navbarAdmin") %> <%
-user.ticketHistory.forEach((ticket) => { %>
+<header><link rel="stylesheet" href="/style/style.css" /></header>
+<%- include("../partials/_navbar") %> <% user.ticketHistory.forEach((ticket) =>
+{ %>
 <ul>
   <li>Movie: <%= ticket.movie %></li>
   <li>Date: <%= ticket.date %></li>

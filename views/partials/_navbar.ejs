@@ -1,13 +1,63 @@
-<nav>
-  <% if(user){ %>
-  <p>Welcome to the app. <%= user.firstName %></p>
-  <a href="/auth/sign-out">Sign out</a>
-  <a href="/auth/edit">Edit profile</a>
+<head>
+  <link rel="stylesheet" href="/style/style.css" />
+</head>
 
-  <% } else { %>
-  <p>Welcome to the app, guest</p>
+<header class="navbar">
+  <div class="nav-left">
+    <% if (!user) { %>
+    <a href="/auth/sign-in">Sign in</a> |
+    <a href="/auth/sign-up">Sign up</a>
+    <% } else { %>
+    <span>Welcome, <%= user.username %></span>
+    <% } %>
+  </div>
 
-  <a href="/auth/sign-up">Sign up</a>
-  <a href="/auth/sign-in">Sign in</a>
-  <% }%>
-</nav>
+  <div class="nav-center">
+    <a href="/" class="logo"
+      ><img class="logoImage" src="/images/pageLogo.png" alt="cineGate logo"
+    /></a>
+  </div>
+
+  <div class="nav-right">
+    <button id="profile-btn">☰</button>
+  </div>
+</header>
+
+<!-- Sidebar -->
+<aside id="sidebar">
+  <button id="close-sidebar">✖</button>
+  <div class="profile-section">
+    <% if (user && user.profilePic) { %>
+    <img
+      src="/uploads/<%= user.profilePic %>?v=<%= Date.now() %>"
+      class="sidebar-img"
+    />
+    <% } else { %>
+    <img src="/images/default.png" class="sidebar-img" />
+    <% } %>
+
+    <h2>User Profile</h2>
+    <p><%= user ? user.username : 'Guest' %></p>
+    <% if (user) { %>
+    <div class="sidebar-links">
+      <a href="/">My Tickets</a>
+      <a href="/auth/edit">Edit Profile</a>
+
+      <!-- <a href="/wallet">💳 My Wallet</a> -->
+    </div>
+    <div class="signoutLink">
+      <a href="/auth/sign-out"> Sign Out</a>
+      <% } %>
+    </div>
+  </div>
+</aside>
+
+<script>
+  const sidebar = document.getElementById('sidebar')
+  const btn = document.getElementById('profile-btn')
+  const close = document.getElementById('close-sidebar')
+  if (btn && sidebar && close) {
+    btn.onclick = () => (sidebar.style.display = 'block')
+    close.onclick = () => (sidebar.style.display = 'none')
+  }
+</script>
