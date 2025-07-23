@@ -4,39 +4,91 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <title>Document</title>
+    <title>Seat Selection</title>
     <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 20px;
+      }
+      #messame {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+      h2 {
+        margin: 10px 0;
+        color: #333;
+      }
       #seats {
         display: flex;
         flex-direction: column;
+        align-items: center;
+      }
+      .screen {
+        width: 100%;
+        height: 50px;
+        background-color: #333;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+        font-weight: bold;
       }
       .rows {
         display: flex;
+        justify-content: center;
+        margin-bottom: 10px;
       }
       .seat-row {
         width: 30px;
         height: 30px;
-        margin: 5px;
-        background-color: white;
-        border: 1px solid black;
+        margin: 2px;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 4px;
         cursor: pointer;
+        transition: background-color 0.3s, transform 0.2s;
+      }
+      .seat-row:hover {
+        background-color: #e0e0e0;
+        transform: scale(1.05);
       }
       .selected {
-        background-color: green;
+        background-color: #4caf50;
       }
       .unavailable {
-        background-color: red;
+        background-color: #f44336;
         cursor: not-allowed;
+      }
+      #submitButton {
+        padding: 10px 15px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        font-size: 16px;
+      }
+      #submitButton:hover {
+        background-color: #0056b3;
       }
     </style>
   </head>
   <body>
     <div id="messame">
-      <h2>Choose your seat</h2>
-      <h2>Movie Name</h2>
-      <h2>Date and Time</h2>
+      <h2>Choose Your Seat</h2>
+      <h2><%= movie.movie.name %></h2>
+      <h2><%= booking.date %> and <%= booking.time %></h2>
     </div>
-    <form id="seatForm" action="/movies/<%= booking._id %>" method="post">
+    <form
+      id="seatForm"
+      action="/movies/bookings/<%= booking._id %>"
+      method="post"
+    >
+      <div class="screen">SCREEN</div>
       <div id="seats"></div>
       <button type="button" id="submitButton">Submit Selection</button>
       <input type="hidden" id="selectedSeats" name="selectedSeats" />
@@ -49,9 +101,9 @@
         try {
           const fulUrl = window.location.href
           const response = await axios.get(fulUrl + '/api')
-          response.data.forEach((seat) => bookedSeats.add(seat)) // Assuming response.data is an array of seat IDs
-          console.log('Fetched booked seats:', Array.from(bookedSeats)) // Log data here to verify
-          attachEvent() // Call attachEvent after fetching booked seats
+          response.data.forEach((seat) => bookedSeats.add(seat))
+          console.log('Fetched booked seats:', Array.from(bookedSeats))
+          attachEvent()
         } catch (error) {
           console.error('Error fetching booked seats:', error)
         }
@@ -72,17 +124,15 @@
             seatElement.setAttribute('id', `seat-${index + 1}-${j + 1}`)
             seatElement.setAttribute('class', 'seat-row')
 
-            // Check if the seat is booked
             if (bookedSeats.has(seatElement.id)) {
               seatElement.classList.add('unavailable')
               seatElement.style.cursor = 'not-allowed'
               unavailableSeats.add(seatElement.id)
             }
 
-            // Add event listener for seat selection
             seatElement.addEventListener('click', function () {
               if (!seatElement.classList.contains('unavailable')) {
-                seatElement.classList.toggle('selected') // Toggle 'selected' class
+                seatElement.classList.toggle('selected')
 
                 const seatId = seatElement.id
                 if (selectedSeats.has(seatId)) {
@@ -101,7 +151,6 @@
           seatsHtml.appendChild(rowElement)
         }
 
-        // Submit button event
         document
           .getElementById('submitButton')
           .addEventListener('click', function () {
@@ -110,20 +159,17 @@
               const unavailableSeatsArray =
                 Array.from(unavailableSeats).join(',')
 
-              // Set the value of the hidden input
               document.getElementById('selectedSeats').value =
                 selectedSeatsArray
               document.getElementById('unavailableSeats').value =
                 unavailableSeatsArray
-              // Submit the form
-              document.getElementById('seatForm').submit() // Ensure this targets the form
+
+              document.getElementById('seatForm').submit()
             } else {
               alert('Please select at least one seat.')
             }
           })
       }
-
-      // Call the fetch function
       fetchBookedSeats()
     </script>
   </body>

@@ -32,25 +32,48 @@ exports.movie_create_post = async (req, res) => {
   }
 }
 exports.movie_index_get = async (req, res) => {
-  const listOfMovies = await Booking.find().populate('movie')
+  const listOfMovies = await Movie.find()
   const bookings = await Booking.find()
   res.render('movie/index.ejs', { movies: listOfMovies, bookings })
+}
+exports.movie_show_get = async (req, res) => {
+  const movie = await Movie.findById(req.params.movieId)
+  const booking = await Booking.findOne({ movie: req.params.movieId })
+  console.log(booking)
+  res.render('movie/show.ejs', { movie, booking })
 }
 
 exports.movie_delete_delete = async (req, res) => {
   const currentMovie = await Movie.findById(req.params.movieId)
-  if (currentMovie.user.equals(req.session.user_id)) {
-    await currentListing.updateOne(req.body)
+  const currentBooking = await Booking.findOne({ movie: req.params.movieId })
+  if (
+    currentMovie.admin.equals(req.session.user_id) &&
+    req.session.user.role === 'admin'
+  ) {
+    await currentListing.deleteOne()
+    await currentBooking.deleteOne()
+    resdirect('/movies')
   } else {
     res.send("You don't have the permission to do that")
   }
 }
+exports.movie_update_get = async (req, res) => {
+  if (req.session.user.role === 'user') {
+    res.send('Error page not found!!!')
+  }
 
+  res.render('movie/edit.ejs', { movie: req.params.movieId })
+}
 exports.movie_update_put = async (req, res) => {
   const currentMovie = await Movie.findById(req.params.movieId)
-  if (currentMovie.user.equals(req.session.user._id)) {
+  const currentBooking = await Booking.findOne({ movie: req.params.movieId })
+  if (
+    currentMovie.admin.equals(req.session.user._id) &&
+    req.session.user.role === 'admin'
+  ) {
     await currentMovie.updateOne(req.body)
-    res.redirect('/movies')
+    await currentBooking.updateOne(req.body)
+    res.redirect(`/movies/${req.params.movieId}`)
   } else {
     res.send("You don't have permission to do that.")
   }
