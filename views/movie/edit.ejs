@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>update movie</title>
+  </head>
+  <body>
+    <%- include("../partials/_navbarAdmin") %>
+    <h1>update a movie</h1>
+    <form action="/movies/<%= movie._id %>?_method=PUT" method="POST">
+      <label for="name">movie name:</label>
+      <input type="text" name="name" id="name" value="<%= movie.name %>" />
+      <br />
+      <label for="poster">poster:</label>
+      <input
+        type="text"
+        name="poster"
+        id="poster"
+        value="<%= movie.poster %>"
+      />
+      <br />
+      <label for="description">description:</label>
+      <input
+        type="text"
+        name="description"
+        id="price"
+        min="0"
+        value="<%= movie.description %>"
+      />
+      <br />
+      <label for="release_date">release date:</label>
+      <input
+        type="date"
+        name="release_date"
+        id="release_date"
+        value="<%= movie.release_date %>"
+      />
+      <br />
+      <label for="movie_length">movie length:</label>
+      <input
+        type="number"
+        name="movie_length"
+        id="movie_length"
+        value="<%= movie.movie_length %>"
+      />
+      <br />
+
+      <label for="theater">theater:</label>
+      <input type="number" name="theater" id="theater" />
+      <br />
+
+      <label for="time">time:</label>
+      <input type="number" name="time" id="time" />
+      <br />
+
+      <label for="date">date:</label>
+      <input type="date" name="date" id="date" />
+
+      <br />
+
+      <button type="submit">update movie</button>
+    </form>
+  </body>
+</html>

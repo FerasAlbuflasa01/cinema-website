@@ -14,8 +14,6 @@ const port = process.env.PORT ? process.env.PORT : '3000'
 const methodOverride = require('method-override')
 const morgan = require('morgan')
 const passUserTOView = require('./middleware/pass-user-to-view')
-const isSignedIn = require('./middleware/is-signed-in')
-const isAdmin = require('./middleware/isAdmin')
 const User = require('./models/user')
 const firstAdmin = async () => {
   const listOfAdmin = await User.findOne({ username: 'admin' })
@@ -23,8 +21,8 @@ const firstAdmin = async () => {
     const password = 'admin123'
     const hashedPassword = await bcrypt.hash(password, 10)
     await User.create({
-      username: 'admin',
-      email: 'test@gmail.com',
+      username: 'admin2',
+      email: 'test2@gmail.com',
       password: hashedPassword,
       role: 'admin'
     })
@@ -52,22 +50,12 @@ app.use(express.json())
 app.use(passUserTOView)
 app.use(methodOverride('_method'))
 app.use(morgan('dev'))
-app.use(express.static(path.join(__dirname,'public')))
+app.use(express.static(path.join(__dirname, 'public')))
 
 // Sesstion Configurations
-
-// app.use((req, res, next) => {
-//   res.locals.user = req.session.user || null
-//   next()
-// })
-
 app.get('/', async (req, res) => {
   res.render('index.ejs')
 })
-
-// app.get('/admin', async (req, res) => {
-//   res.render('index.ejs')
-// })
 
 // Require Routes
 const authRouter = require('./routes/auth')
@@ -75,8 +63,7 @@ const movieRouter = require('./routes/moiveRoute')
 
 //Use Routes
 app.use('/auth', authRouter)
-// app.use('/admin/auth', authAdminRouter)
-// app.use('/admin/movies', isAdmin, movieRouter)
+
 app.use('/movies', movieRouter)
 
 app.listen(port, () => {
