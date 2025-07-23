@@ -1,0 +1,22 @@
+/* Admin Links Section */
+.adminLinks {
+  display: flex;
+  justify-content: center;       /* Center horizontally */
+  margin-top: 40px;              /* Space from top */
+  gap: 40px;                     /* Space between links */
+}
+
+/* Admin Links - Style */
+.adminLinks a {
+  color: white;                  /* White text */
+  text-decoration: none;         /* No underline */
+  font-weight: bold;             /* Bold text */
+  font-size: 22px;               /* Larger text */
+  transition: color 0.3s ease;   /* Smooth hover effect */
+}
+
+/* Hover Effect */
+.adminLinks a:hover {
+  color: #FFD700;                /* Gold on hover */
+}
+
