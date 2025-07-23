@@ -79,6 +79,7 @@ body {
   display: none;
   padding: 20px;
   z-index: 1000;
+  transition: all 0.3s ease;
 }
 
 #close-sidebar {
@@ -88,6 +89,7 @@ body {
   float: right;
   cursor: pointer;
   color: #333;
+  transition: all 0.3s ease;
 }
 
 .profile-section {

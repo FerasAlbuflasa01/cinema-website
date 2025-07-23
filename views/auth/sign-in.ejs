@@ -2,32 +2,30 @@
   <link rel="stylesheet" href="/style/signin.css" />
 </head>
 <%- include("../partials/_navbar") %>
-<div class="signIn">
+<div class="form">
   <div class="container">
     <h1>Sign In</h1>
-    <div class="">
-      <form action="/auth/sign-in" method="post">
-        <input
-          placeholder="Username"
-          type="text"
-          name="username"
-          id="username"
-          class=""
-        />
+    <form action="/auth/sign-in" method="post">
+      <input
+        placeholder="Username"
+        type="text"
+        name="username"
+        id="username"
+        class="field"
+      />
 
-        <br />
+      <br />
 
-        <input
-          placeholder="password"
-          type="password"
-          name="password"
-          id="password"
-          class=""
-        />
+      <input
+        placeholder="Password"
+        type="password"
+        name="password"
+        id="password"
+        class="field"
+      />
 
-        <br />
-        <button type="sumbit" class="">Sign in</button>
-      </form>
-    </div>
+      <br />
+      <button type="sumbit" class="field sign">Sign in</button>
+    </form>
   </div>
 </div>
