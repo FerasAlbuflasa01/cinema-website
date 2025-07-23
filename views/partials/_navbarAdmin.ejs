@@ -1,20 +1,41 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4">
+  <div
+    class="container-fluid d-flex justify-content-between align-items-center"
+  >
+    <!-- ✅ Left (Auth Links or User Profile) -->
+    <div class="d-flex align-items-center">
+      <% if (user) { %>
+      <img
+        src="/uploads/<%= user.profilePic || 'default.png' %>"
+        class="profile-pic me-2"
+      />
+      <span class="text-white fw-semibold me-3"><%= user.firstName %></span>
+      <a href="/auth/sign-out" class="nav-link text-white">Sign Out</a>
+      <% } else { %>
+      <i class="fas fa-user fa-lg text-white me-2"></i>
+      <a href="/auth/sign-in" class="nav-link text-white">Sign in</a>
+      <span class="text-white mx-1">|</span>
+      <a href="/auth/sign-up" class="nav-link text-white">Sign up</a>
+      <% } %>
+    </div>
 
+    <!-- ✅ Center (Logo) -->
+    <a class="navbar-brand mx-auto text-white fw-bold" href="/">
+      <img src="/images/pageLogo.png" alt="Logo" height="40" />
+    </a>
 
-
-
-<nav>
-  <% if (user) { %> <% if (user.role==="admin") { %>
-  <a href="/movies/new">add a movie</a>
-  <a href="/movies">View all movies</a>
-  <a href="/auth/sign-out">Sign Out</a>
-  <% } else{%>
-  <a href="/movies">View all movies</a>
-  <a href="/auth/edit">Edit profile</a>
-  <a href="/auth/view">Your Tickets</a>
-  <a href="/auth/sign-out">Sign Out</a>
-  <% }} else{%>
-  <a href="/movies">View all movies</a>
-  <a href="/auth/sign-up">Sign up</a>
-  <a href="/auth/sign-in">Sign in</a>
-  <% } %>
+    <!-- ✅ Right (Links) -->
+    <div class="d-flex align-items-center">
+      <% if (user && user.role === "admin") { %>
+      <a href="/movies/new" class="nav-link text-white">Add Movie</a>
+      <a href="/movies" class="nav-link text-white">All Movies</a>
+      <% } else if (user) { %>
+      <a href="/movies" class="nav-link text-white">All Movies</a>
+      <a href="/auth/view" class="nav-link text-white">Your Tickets</a>
+      <a href="/auth/edit" class="nav-link text-white">Edit Profile</a>
+      <% } else { %>
+      <a href="/movies" class="nav-link text-white">View Movies</a>
+      <% } %>
+    </div>
+  </div>
 </nav>

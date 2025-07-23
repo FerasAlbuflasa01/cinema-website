@@ -63,7 +63,8 @@ exports.auth_signin_post = async (req, res) => {
   req.session.user = {
     username: user.username,
     _id: user._id,
-    role: userInDatabase.role
+    role: userInDatabase.role,
+    profilePic: user.profilePic
   }
 
   // Redirect based on role
@@ -79,7 +80,7 @@ exports.auth_signin_post = async (req, res) => {
 }
 exports.auth_signout_get = (req, res) => {
   req.session.destroy()
-  res.redirect('/movies')
+  res.redirect('/')
 }
 
 exports.auth_edit_get = async (req, res) => {
@@ -109,6 +110,11 @@ exports.auth_edit_put = async (req, res) => {
     user.password = hashedNewPassword
   }
   await user.save()
+
+  req.session.user.username = user.username
+  req.session.user.email = user.email
+  req.session.user.profilePic = user.profilePic
+
   res.redirect('/')
 }
 

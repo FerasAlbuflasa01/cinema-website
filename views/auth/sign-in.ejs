@@ -1,23 +1,33 @@
 <head>
-   <link rel="stylesheet" href="/style/signin.css" />
+  <link rel="stylesheet" href="/style/signin.css" />
 </head>
 <%- include("../partials/_navbar") %>
+<div class="signIn">
+  <div class="container">
+    <h1>Sign In</h1>
+    <div class="">
+      <form action="/auth/sign-in" method="post">
+        <input
+          placeholder="Username"
+          type="text"
+          name="username"
+          id="username"
+          class=""
+        />
 
+        <br />
 
-<h1>Sign In</h1>
-<div class = "neumorphic  neumorphic-card ">
+        <input
+          placeholder="password"
+          type="password"
+          name="password"
+          id="password"
+          class=""
+        />
 
-<form action="/auth/sign-in" method="post">
-  <label for="username">username: </label>
-  <input type="text" name="username" id="username" class="neumorphic neumorphic-input" />
-
-  <br />
-
-  <label for="password">Password: </label>
-  <input type="password" name="password" id="password" class="neumorphic neumorphic-input" />
-
-
-  <br />
-  <button type="sumbit" class="neumorphic neumorphic-button">Sign in</button>
-</form>
+        <br />
+        <button type="sumbit" class="">Sign in</button>
+      </form>
+    </div>
+  </div>
 </div>
