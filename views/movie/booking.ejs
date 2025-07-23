@@ -3,105 +3,27 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link rel="stylesheet" href="/style/style.css" />
-    <style>
-      #seats {
-        display: flex;
-        flex-direction: column;
-      }
-      .rows {
-        background-color: blue;
-        display: flex;
-      }
-      .seat-row {
-        width: 30px;
-        height: 30px;
-        margin: 5px;
-        background-color: white;
-        border: 1px solid black;
-        cursor: pointer;
-      }
-      .selected {
-        background-color: green;
-      }
-      .unavailable {
-        background-color: red;
-        cursor: not-allowed;
-      }
-    </style>
+    <link rel="stylesheet" href="/style/bookingStyle.css" />
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>Seat Selection</title>
   </head>
   <body>
-    <%- include("../partials/_navbar") %>
-
     <div id="messame">
-      <h2>Choose your seat</h2>
+      <h2>Choose Your Seat</h2>
       <h2><%= movie.movie.name %></h2>
-      <h2>
-        <%= booking.date %> and <%= booking.time %> | <%= booking.theater %>
-      </h2>
+      <h2><%= booking.date %> and <%= booking.time %></h2>
     </div>
-    <form id="seatForm" action="/movies/<%= booking._id %>" method="post">
+    <form
+      id="seatForm"
+      action="/movies/bookings/<%= booking._id %>"
+      method="post"
+    >
+      <div class="screen">SCREEN</div>
       <div id="seats"></div>
       <button type="button" id="submitButton">Submit Selection</button>
       <input type="hidden" id="selectedSeats" name="selectedSeats" />
+      <input type="hidden" id="unavailableSeats" name="unavailableSeats" />
     </form>
-    <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        const seatsHtml = document.querySelector('#seats')
-        const selectedSeats = new Set()
-
-        for (let index = 0; index < 6; index++) {
-          let rowElement = document.createElement('div')
-          rowElement.setAttribute('id', `row-${index + 1}`)
-          rowElement.setAttribute('class', 'rows')
-          for (let j = 0; j < 6; j++) {
-            let seatElement = document.createElement('div')
-            seatElement.setAttribute('id', `seat-${index + 1}-${j + 1}`)
-            seatElement.setAttribute('class', 'seat-row')
-
-            // Optionally mark some seats as unavailable
-            if (Math.random() < 0.3) {
-              seatElement.classList.add('unavailable')
-              seatElement.style.cursor = 'not-allowed' // Change cursor
-            } else {
-              // Add event listener for seat selection
-              seatElement.addEventListener('click', function () {
-                if (!seatElement.classList.contains('unavailable')) {
-                  seatElement.classList.toggle('selected') // Toggle 'selected' class
-                  const seatId = seatElement.id
-                  if (selectedSeats.has(seatId)) {
-                    selectedSeats.delete(seatId) // Remove from selection
-                  } else {
-                    selectedSeats.add(seatId) // Add to selection
-                  }
-                  console.log('Selected Seats:', Array.from(selectedSeats))
-                }
-              })
-            }
-
-            rowElement.appendChild(seatElement)
-          }
-          seatsHtml.appendChild(rowElement)
-        }
-
-        // Submit button event
-        document
-          .getElementById('submitButton')
-          .addEventListener('click', function () {
-            if (selectedSeats.size > 0) {
-              // Convert Set to Array and join into a string
-              const selectedSeatsArray = Array.from(selectedSeats).join(',')
-              // Set the value of the hidden input
-              document.getElementById('selectedSeats').value =
-                selectedSeatsArray
-              // Submit the form
-              document.getElementById('seatForm').submit() // Ensure this targets the form
-            } else {
-              alert('Please select at least one seat.')
-            }
-          })
-      })
-    </script>
+    <script src="/scripts/bookingScript.js"></script>
   </body>
 </html>
