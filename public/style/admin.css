@@ -1,22 +1,21 @@
-/* Admin Links Section */
+
 .adminLinks {
   display: flex;
-  justify-content: center;       /* Center horizontally */
-  margin-top: 40px;              /* Space from top */
-  gap: 40px;                     /* Space between links */
+  justify-content: center;      
+  margin-top: 40px;              
+  gap: 40px;                     
 }
 
-/* Admin Links - Style */
 .adminLinks a {
-  color: white;                  /* White text */
-  text-decoration: none;         /* No underline */
-  font-weight: bold;             /* Bold text */
-  font-size: 22px;               /* Larger text */
-  transition: color 0.3s ease;   /* Smooth hover effect */
+  color: white;                  
+  text-decoration: none;         
+  font-weight: bold;             
+  font-size: 22px;               
+  transition: color 0.3s ease;   
 }
 
-/* Hover Effect */
+
 .adminLinks a:hover {
-  color: #FFD700;                /* Gold on hover */
+  color: #FFD700;               
 }
 
