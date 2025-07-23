@@ -1,5 +1,7 @@
 const User = require('../models/user.js')
 const bcrypt = require('bcrypt')
+const Movie = require('../models/movie')
+const Booking = require('../models/booking')
 
 //API's
 
@@ -14,7 +16,7 @@ exports.auth_signup_post = async (req, res) => {
     return res.send('Username already taken!')
   }
   if (req.body.password !== req.body.confirmPassword) {
-    return res.send('Password and confirm password must mutch...')
+    return res.send('Password and confirm password must match...')
   }
 
   const hashedPassword = bcrypt.hashSync(req.body.password, 10)
@@ -30,7 +32,7 @@ exports.auth_signup_post = async (req, res) => {
     role: 'user',
     profilePic: profilePic
   })
-  res.send(`Thanks for signing up ${user.username} `)
+  res.render('auth/sign-in.ejs')
 }
 
 exports.auth_signin_get = async (req, res) => {
@@ -60,16 +62,11 @@ exports.auth_signin_post = async (req, res) => {
     profilePic: user.profilePic
   }
 
-  if (user.role === 'admin') {
-    console.log(req.session.user)
-
-    res.redirect('/')
-  } else {
-    console.log(req.session.user)
-
-    res.redirect('/')
-  }
+  const listOfMovies = await Movie.find()
+  const bookings = await Booking.find()
+  res.render('movie/index.ejs', { movies: listOfMovies, bookings, user })
 }
+
 exports.auth_signout_get = (req, res) => {
   req.session.destroy()
   res.redirect('/')
@@ -100,6 +97,7 @@ exports.auth_edit_put = async (req, res) => {
     const hashedNewPassword = bcrypt.hashSync(req.body.newPassword, 10)
     user.password = hashedNewPassword
   }
+
   await user.save()
 
   req.session.user.username = user.username

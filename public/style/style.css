@@ -21,17 +21,20 @@ body {
 /* Navbar */
 .navbar {
   background: var(--cinegate-navy);
-
   display: flex;
   justify-content: space-between;
   align-items: center;
-
-  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
-
-  color: #fff;
+  position: relative;
   padding: 10px 20px;
-
   height: 85px;
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+  color: #fff;
+}
+
+.nav-center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .logoImage {

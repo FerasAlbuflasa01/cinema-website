@@ -3,26 +3,53 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title><%= movie.name %> - Movie Details</title>
+    <link rel="stylesheet" href="/style/style.css" />
+    <link rel="stylesheet" href="/style/movie.css" />
   </head>
   <body>
-    <%- include("../partials/_navbarAdmin") %>
-    <ul>
-      <li><%= movie.name %></li>
-      <li>
-        <img src="<%= movie.poster %>" alt="" />
-      </li>
-      <li><%= movie.description %></li>
-      <li><a href="/movies/bookings/<%= booking._id %>">book now</a></li>
-      <% if (user.role==="admin") { %>
-      <li><a href="/movies/<%= movie._id %>/edit">edit</a></li>
+    <%- include("../partials/_navbar") %>
 
-      <li>
-        <form action="/movies/<%= movie._id %>?_method=DELETE" method="POST">
-          <button type="submit">Delete <%= movie.name %></button>
-        </form>
-      </li>
-      <% } %>
-    </ul>
+    <div class="movie-details-container">
+      <div class="poster">
+        <img
+          src="/uploads/<%= movie.poster %>"
+          alt="<%= movie.name %> poster"
+        />
+      </div>
+
+      <div class="details">
+        <h1><%= movie.name %></h1>
+        <p class="description"><%= movie.description %></p>
+
+        <p>
+          <strong>Movie Length (minutes):</strong> <%= movie.movie_length %>
+        </p>
+
+        <% if (booking) { %>
+        <p><strong>Theater:</strong> <%= booking.theater %></p>
+        <p><strong>Time:</strong> <%= booking.time %></p>
+        <p>
+          <strong>Date:</strong> <%= new Date(booking.date).toLocaleDateString()
+          %>
+        </p>
+        <% } else { %>
+        <p>No booking info available yet.</p>
+        <% } %>
+
+        <a href="/movies/bookings/<%= booking._id %>" class="book-btn"
+          >Book Now</a
+        >
+
+        <% if (user && user.role === "admin") { %>
+        <div class="admin-controls">
+          <a href="/movies/<%= movie._id %>/edit" class="edit-btn">Edit</a>
+          <form action="/movies/<%= movie._id %>?_method=DELETE" method="POST">
+            <button type="submit" class="delete-btn">Delete</button>
+          </form>
+        </div>
+        <% } %>
+      </div>
+    </div>
   </body>
 </html>

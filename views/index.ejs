@@ -3,18 +3,26 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- <link rel="stylesheet" href="/style/style.css" /> -->
     <link rel="stylesheet" href="/style/admin.css" />
+    <link rel="stylesheet" href="/style/welcome.css" />
     <title>CineGate</title>
   </head>
 
   <body>
     <%- include("./partials/_navbar") %>
-    <div class="adminLinks">
+    <!-- <div class="adminLinks">
       <% if (user && user.role === 'admin') { %>
       <a href="/movies/new">Add a New Movie</a>
       <a href="/movies">Show All Movies</a>
-      <% } %>
+      <% } else { %>
+      <a href="/movies">Show All Movies</a>
+      <%}%>
+    </div> -->
+    <div class="welcome">
+      <h1 class="welcomeHeader">Welcome to your ultimate movie experience</h1>
+      <div class="adminLinks">
+        <a href="/movies">Show All Movies</a>
+      </div>
     </div>
   </body>
 </html>

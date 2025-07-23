@@ -2,7 +2,7 @@ body {
   font-family: Arial, sans-serif;
   background-color: #f4f4f4;
   margin: 0;
-  padding: 20px;
+  padding: 0;
 }
 #messame {
   text-align: center;
@@ -10,23 +10,45 @@ body {
 }
 h2 {
   margin: 10px 0;
-  color: #333;
+  color: #ffffff;
 }
 #seats {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
+.movieName {
+  color: #feba17;
+}
 .screen {
-  width: 100%;
+  width: 350px;
   height: 50px;
-  background-color: #333;
-  color: white;
+  background-color: #ffffff;
+  color: rgb(0, 0, 0);
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: auto;
   margin-bottom: 20px;
+
   font-weight: bold;
+}
+.cinema {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: #ccc;
+  padding: 20px;
+  margin: 30px;
+  height: 400px;
+  width: 400px;
+  border-radius: 20px;
+}
+
+.cinemaAll {
+  display: flex;
+  justify-content: center;
 }
 .rows {
   display: flex;
@@ -56,14 +78,15 @@ h2 {
 }
 #submitButton {
   padding: 10px 15px;
-  background-color: #007bff;
+  background-color: #1a365d;
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 20px;
   cursor: pointer;
   transition: background-color 0.3s;
   font-size: 16px;
 }
 #submitButton:hover {
-  background-color: #0056b3;
+  background-color: #27548a;
+  border: none;
 }
