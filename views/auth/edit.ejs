@@ -1,34 +1,107 @@
-<header><link rel="stylesheet" href="/style/style.css" /></header>
+<header>
+  <link rel="stylesheet" href="/style/signin.css" />
+</header>
 <%- include("../partials/_navbar") %>
 
-<h1>Edit Your Profile</h1>
+<h1 class="newAccount">Edit Your Profile</h1>
+<div class="form">
+  <div class="container">
+    <form
+      action="/auth/edit?_method=PUT"
+      method="POST"
+      enctype="multipart/form-data"
+    >
+      <label>Username:</label>
+      <input
+        type="text"
+        name="username"
+        value="<%= user.username %>"
+        class="field"
+      />
+      <br />
 
-<form
-  action="/auth/edit?_method=PUT"
-  method="POST"
-  enctype="multipart/form-data"
->
-  <label>Username:</label>
-  <input type="text" name="username" value="<%= user.username %>" />
-  <br />
+      <label>Email:</label>
+      <input
+        type="email"
+        name="email"
+        value="<%= user.email %>"
+        class="field"
+      />
+      <br />
 
-  <label>Email:</label>
-  <input type="email" name="email" value="<%= user.email %>" />
-  <br />
+      <h3>Change Password</h3>
+      <label>Current Password:</label>
+      <input type="password" name="currentPassword" class="field" />
+      <br />
 
-  <h3>Change Password</h3>
-  <label>Current Password:</label>
-  <input type="password" name="currentPassword" />
-  <br />
+      <label>New Password:</label>
+      <input type="password" name="newPassword" class="field" />
+      <br />
 
-  <label>New Password:</label>
-  <input type="password" name="newPassword" />
-  <br />
+      <label>Update Profile Picture:</label>
+      <div class="image">
+        <div class="upload-text">Click to upload profile image</div>
 
-  <label>Update Profile Picture:</label>
-  <input type="file" name="image" />
+        <div
+          class="upload-area"
+          onclick="document.getElementById('imageInput').click()"
+        >
+          <img
+            id="previewImage"
+            src="<%= user.image ? '/uploads/' + user.image : '#' %>"
+            alt="Preview"
+            class="preview-img"
+          />
 
-  <br />
+          <div class="upload-icon">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="40px"
+              viewBox="0 -960 960 960"
+              width="40px"
+              fill="#1f1f1f"
+            >
+              <path
+                d="M446.67-315.33v-356L332-556.67l-47.33-48L480-800l195.33 195.33-47.33 48-114.67-114.66v356h-66.66ZM226.67-160q-27 0-46.84-19.83Q160-199.67 160-226.67V-362h66.67v135.33h506.66V-362H800v135.33q0 27-19.83 46.84Q760.33-160 733.33-160H226.67Z"
+              />
+            </svg>
+          </div>
+          <input
+            type="file"
+            id="imageInput"
+            name="image"
+            accept="image/*"
+            class="file-input"
+          />
+        </div>
+      </div>
+      <br />
 
-  <button type="submit">Update Profile</button>
-</form>
+      <button type="submit" class="field sign" class="field sign">
+        Update Profile
+      </button>
+    </form>
+  </div>
+</div>
+
+<script>
+  document
+    .getElementById('imageInput')
+    .addEventListener('change', function (event) {
+      const input = event.target
+      const preview = document.getElementById('previewImage')
+      const uploadIcon = document.querySelector('.upload-icon')
+      const uploadText = document.querySelector('.upload-text')
+
+      if (input.files && input.files[0]) {
+        const reader = new FileReader()
+        reader.onload = function (e) {
+          preview.src = e.target.result
+          preview.style.display = 'block'
+          uploadIcon.style.display = 'none'
+          uploadText.style.display = 'none'
+        }
+        reader.readAsDataURL(input.files[0])
+      }
+    })
+</script>

@@ -3,11 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/style/style.css" />
 
     <title>new movie</title>
   </head>
   <body>
-    <%- include("../partials/_navbarAdmin") %>
+    <%- include("../partials/_navbar") %>
     <h1>add a movie</h1>
     <form action="/movies/new" method="POST">
       <label for="name">movie name:</label>
@@ -26,22 +27,18 @@
       <input type="number" name="movie_length" id="movie_length" />
       <br />
 
-
-       <label for="theater">theater:</label>
+      <label for="theater">theater:</label>
       <input type="number" name="theater" id="theater" />
       <br />
-      
-       <label for="time">time:</label>
+
+      <label for="time">time:</label>
       <input type="number" name="time" id="time" />
       <br />
 
-       <label for="date">date:</label>
+      <label for="date">date:</label>
       <input type="date" name="date" id="date" />
 
       <br />
-
-
-
 
       <button type="submit">Add movie</button>
     </form>
