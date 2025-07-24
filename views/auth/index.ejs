@@ -1,10 +1,45 @@
-<header><link rel="stylesheet" href="/style/style.css" /></header>
-<%- include("../partials/_navbar") %> <% user.ticketHistory.forEach((ticket) =>
-{ %>
-<ul>
-  <li>Movie: <%= ticket.movie %></li>
-  <li>Date: <%= ticket.date %></li>
-  <li>Time: <%= ticket.time %></li>
-  <li>Seats: <%= ticket.seats.join(', ') %></li>
-</ul>
+<header>
+  <link rel="stylesheet" href="/style/style.css" />
+</header>
+<%- include("../partials/_navbar") %> <%
+user.ticketHistory.slice().reverse().forEach((ticket) => { %>
+
+<div class="cardWrap">
+  <div class="card cardLeft">
+    <h1>CineGate <span>Cinemas</span></h1>
+    <div class="createdAt">
+      <h3><%= ticket.createdAt.toLocaleString() %></h3>
+      <span>Booked at</span>
+    </div>
+    <div class="title">
+      <h2><%= ticket.movie %></h2>
+      <span>movie</span>
+    </div>
+
+    <div class="seat">
+      <h5><%= ticket.seats %></h5>
+      <span>seats</span>
+    </div>
+    <% const dateString = "Thu Jul 31 2025 03:00:00 GMT+0300"; const date = new
+    Date(dateString); const options = { year: 'numeric', month: '2-digit', day:
+    '2-digit' }; const formattedDate = date.toLocaleDateString('en-GB',
+    options); // Format: DD/MM/YYYY %>
+
+    <div class="time">
+      <h2><%= formattedDate %> At <%= ticket.time %></h2>
+      <span>Booked for</span>
+    </div>
+  </div>
+  <div class="card cardRight">
+    <div class="eye">
+      <img src="/images/pageLogo.png" alt="CineGate logo" />
+    </div>
+    <div class="number">
+      <h3><%= ticket.theater%></h3>
+      <!-- Display one seat number -->
+      <span>Theater</span>
+    </div>
+    <div class="barcode"></div>
+  </div>
+</div>
 <% }) %>

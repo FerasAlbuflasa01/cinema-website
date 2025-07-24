@@ -25,21 +25,24 @@ const userSchema = new mongoose.Schema(
     },
     ticketHistory: [
       {
+        theater: {
+          type: String
+        },
         movie: {
-          type: String,
-          required: true
+          type: String
         },
         time: {
-          type: String,
-          required: true
+          type: String
         },
         date: {
-          type: String,
-          required: true
+          type: String
         },
         seats: {
-          type: [String],
-          required: true
+          type: [String]
+        },
+        createdAt: {
+          type: Date,
+          default: Date.now // Automatically set to the current date and time
         }
       }
     ]

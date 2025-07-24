@@ -85,13 +85,6 @@ exports.movie_update_put = async (req, res) => {
     currentMovie.admin.equals(req.session.user._id) &&
     req.session.user.role === 'admin'
   ) {
-    // Ensure req.body is defined and contains the expected properties
-    if (req.body.name) {
-      currentMovie.name = req.body.name
-    } else {
-      return res.status(400).send('Movie name is required.')
-    }
-
     currentMovie.description = req.body.description
     currentMovie.release_date = req.body.release_date
     currentMovie.movie_length = req.body.movie_length
@@ -129,6 +122,7 @@ exports.movie_booking_post = async (req, res) => {
   const user = await User.findByIdAndUpdate(req.session.user._id, {
     $push: {
       ticketHistory: {
+        theater: booking.theater,
         movie: movie.movie.name,
         date: booking.date,
         time: booking.time,
@@ -147,7 +141,7 @@ exports.movie_booking_post = async (req, res) => {
     }
   })
 
-  res.redirect('/movies')
+  res.redirect('/auth/view')
 }
 exports.booking_api_get = async (req, res) => {
   const bookedSeats = await Booking.findById(req.params.bookingId)
