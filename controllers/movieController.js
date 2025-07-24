@@ -80,6 +80,7 @@ exports.movie_update_put = async (req, res) => {
     currentMovie.admin.equals(req.session.user._id) &&
     req.session.user.role === 'admin'
   ) {
+    console.log(req.body.name)
     currentMovie.name = req.body.name
     currentMovie.description = req.body.description
     currentMovie.release_date = req.body.release_date
