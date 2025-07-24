@@ -64,14 +64,19 @@ exports.movie_delete_delete = async (req, res) => {
 exports.movie_update_get = async (req, res) => {
   if (req.session.user.role === 'user') {
     return res.send('Error page not found!!!')
-  }
-  const currentMovie = await Movie.findById(req.params.movieId)
-  const currentBooking = await Booking.findOne({ movie: req.params.movieId })
+  } else {
+    const currentMovie = await Movie.findById(req.params.movieId)
+    const currentBooking = await Booking.findOne({ movie: req.params.movieId })
 
-  res.render('movie/edit.ejs', { movie: currentMovie, booking: currentBooking })
+    res.render('movie/edit.ejs', {
+      movie: currentMovie,
+      booking: currentBooking
+    })
+  }
 }
 
 exports.movie_update_put = async (req, res) => {
+  console.log(req.body) // Check what is being received
   const currentMovie = await Movie.findById(req.params.movieId)
   const currentBooking = await Booking.findOne({ movie: req.params.movieId })
 
@@ -80,8 +85,13 @@ exports.movie_update_put = async (req, res) => {
     currentMovie.admin.equals(req.session.user._id) &&
     req.session.user.role === 'admin'
   ) {
-    console.log(req.body.name)
-    currentMovie.name = req.body.name
+    // Ensure req.body is defined and contains the expected properties
+    if (req.body.name) {
+      currentMovie.name = req.body.name
+    } else {
+      return res.status(400).send('Movie name is required.')
+    }
+
     currentMovie.description = req.body.description
     currentMovie.release_date = req.body.release_date
     currentMovie.movie_length = req.body.movie_length
@@ -99,9 +109,11 @@ exports.movie_update_put = async (req, res) => {
       await currentBooking.save()
     }
 
-    res.redirect(`/movies/${req.params.movieId}`)
+    return res.redirect(`/movies/${req.params.movieId}`)
   } else {
-    res.send("You don't have permission to update this movie.")
+    return res
+      .status(403)
+      .send("You don't have permission to update this movie.")
   }
 }
 
