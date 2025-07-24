@@ -64,14 +64,19 @@ exports.movie_delete_delete = async (req, res) => {
 exports.movie_update_get = async (req, res) => {
   if (req.session.user.role === 'user') {
     return res.send('Error page not found!!!')
-  }
-  const currentMovie = await Movie.findById(req.params.movieId)
-  const currentBooking = await Booking.findOne({ movie: req.params.movieId })
+  } else {
+    const currentMovie = await Movie.findById(req.params.movieId)
+    const currentBooking = await Booking.findOne({ movie: req.params.movieId })
 
-  res.render('movie/edit.ejs', { movie: currentMovie, booking: currentBooking })
+    res.render('movie/edit.ejs', {
+      movie: currentMovie,
+      booking: currentBooking
+    })
+  }
 }
 
 exports.movie_update_put = async (req, res) => {
+  console.log(req.body) // Check what is being received
   const currentMovie = await Movie.findById(req.params.movieId)
   const currentBooking = await Booking.findOne({ movie: req.params.movieId })
 
@@ -80,7 +85,6 @@ exports.movie_update_put = async (req, res) => {
     currentMovie.admin.equals(req.session.user._id) &&
     req.session.user.role === 'admin'
   ) {
-    currentMovie.name = req.body.name
     currentMovie.description = req.body.description
     currentMovie.release_date = req.body.release_date
     currentMovie.movie_length = req.body.movie_length
@@ -98,9 +102,11 @@ exports.movie_update_put = async (req, res) => {
       await currentBooking.save()
     }
 
-    res.redirect(`/movies/${req.params.movieId}`)
+    return res.redirect(`/movies/${req.params.movieId}`)
   } else {
-    res.send("You don't have permission to update this movie.")
+    return res
+      .status(403)
+      .send("You don't have permission to update this movie.")
   }
 }
 
@@ -116,6 +122,7 @@ exports.movie_booking_post = async (req, res) => {
   const user = await User.findByIdAndUpdate(req.session.user._id, {
     $push: {
       ticketHistory: {
+        theater: booking.theater,
         movie: movie.movie.name,
         date: booking.date,
         time: booking.time,
@@ -134,7 +141,7 @@ exports.movie_booking_post = async (req, res) => {
     }
   })
 
-  res.redirect('/movies')
+  res.redirect('/auth/view')
 }
 exports.booking_api_get = async (req, res) => {
   const bookedSeats = await Booking.findById(req.params.bookingId)

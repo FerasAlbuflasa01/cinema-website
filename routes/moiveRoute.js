@@ -17,7 +17,12 @@ router.get('/bookings/:bookingId', isSignedIn, movieCtrl.movie_booking_get)
 router.post('/bookings/:bookingId', isSignedIn, movieCtrl.movie_booking_post)
 router.get('/:movieId', movieCtrl.movie_show_get)
 router.get('/:movieId/edit', isSignedIn, movieCtrl.movie_update_get)
-router.put('/:movieId', isSignedIn, movieCtrl.movie_update_put)
+router.put(
+  '/:movieId',
+  upload.single('image'),
+  isSignedIn,
+  movieCtrl.movie_update_put
+)
 router.delete('/:movieId', isSignedIn, movieCtrl.movie_delete_delete)
 
 router.get('/bookings/:bookingId/api', movieCtrl.booking_api_get)

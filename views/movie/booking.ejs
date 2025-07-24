@@ -13,9 +13,14 @@
     <%- include("../partials/_navbar") %>
 
     <div id="messame">
+      <% const dateString = "Thu Jul 31 2025 03:00:00 GMT+0300"; const date =
+      new Date(dateString); const options = { year: 'numeric', month: '2-digit',
+      day: '2-digit' }; const formattedDate = date.toLocaleDateString('en-GB',
+      options); // Format: DD/MM/YYYY %>
+
       <h2>Choose Your Seat</h2>
       <h2 class="movieName"><%= movie.movie.name %></h2>
-      <h2><%= booking.date %> and <%= booking.time %></h2>
+      <h2><%= formattedDate %> At <%= booking.time %></h2>
     </div>
     <div class="cinemaAll">
       <div class="cinema">
@@ -26,7 +31,7 @@
         >
           <div class="screen">SCREEN</div>
           <div id="seats"></div>
-          <button type="button" id="submitButton">Submit Selection</button>
+          <button type="button" id="submitButton">Book</button>
           <input type="hidden" id="selectedSeats" name="selectedSeats" />
           <input type="hidden" id="unavailableSeats" name="unavailableSeats" />
         </form>
